@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - HousePredict AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/colors.css') }}">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <div class="brand-logo me-2">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 4L4 14V28H12V20H20V28H28V14L16 4Z" fill="url(#logoGradient)" />
+                        <defs>
+                            <linearGradient id="logoGradient" x1="4" y1="4" x2="28" y2="28"
+                                gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#ec4899" />
+                                <stop offset="1" stop-color="#8b5cf6" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <span>HousePredict AI</span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/predict">Predict</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/analytics">Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <button id="themeToggle" class="theme-toggle" title="Toggle Theme">
+                            <i class="fas fa-sun sun-icon"></i>
+                            <i class="fas fa-moon moon-icon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard-section">
+        <div class="container">
+            <!-- Dashboard Header -->
+            <div class="dashboard-header text-center mb-5">
+                <h1 class="display-4 fw-bold mb-3">
+                    <i class="fas fa-chart-pie me-3"></i>Prediction Dashboard
+                </h1>
+                <p class="lead">Track your predictions and analyze market trends</p>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="row g-4 mb-5">
+                <div class="col-lg-3 col-md-6">
+                    <div class="dashboard-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalPredictions">0</h3>
+                            <p>Total Predictions</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="dashboard-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="avgPrice">$0</h3>
+                            <p>Average Price</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="dashboard-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-arrow-trend-up"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="highestPrice">$0</h3>
+                            <p>Highest Price</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="dashboard-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-arrow-trend-down"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="lowestPrice">$0</h3>
+                            <p>Lowest Price</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="row g-4 mb-5">
+                <div class="col-lg-6">
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-plus-circle"></i>
+                        </div>
+                        <div class="action-content">
+                            <h4>New Prediction</h4>
+                            <p>Start a new house price prediction</p>
+                            <a href="/predict" class="btn btn-primary">
+                                <i class="fas fa-rocket me-2"></i>Predict Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="action-content">
+                            <h4>View Analytics</h4>
+                            <p>Explore market trends and insights</p>
+                            <a href="/analytics" class="btn btn-outline-light">
+                                <i class="fas fa-chart-line me-2"></i>View Analytics
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prediction History -->
+            <div class="prediction-history-section">
+                <div class="section-header d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold">
+                        <i class="fas fa-history me-2"></i>Prediction History
+                    </h2>
+                    <button class="btn btn-outline-light" onclick="clearHistory()">
+                        <i class="fas fa-trash me-2"></i>Clear History
+                    </button>
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyState" class="empty-state text-center py-5">
+                    <i class="fas fa-inbox fa-4x mb-4"></i>
+                    <h3>No Predictions Yet</h3>
+                    <p class="mb-4">Start making predictions to see your history here</p>
+                    <a href="/predict" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Make First Prediction
+                    </a>
+                </div>
+
+                <!-- History Table -->
+                <div id="historyTable" class="history-table" style="display: none;">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Date & Time</th>
+                                    <th>Area (sq ft)</th>
+                                    <th>Bedrooms</th>
+                                    <th>Location</th>
+                                    <th>Condition</th>
+                                    <th>Predicted Price</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyTableBody">
+                                <!-- Dynamic content -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Predictions Cards -->
+            <div class="recent-predictions mt-5">
+                <h2 class="fw-bold mb-4">
+                    <i class="fas fa-clock-rotate-left me-2"></i>Recent Predictions
+                </h2>
+                <div id="recentCards" class="row g-4">
+                    <!-- Dynamic cards -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5 mt-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-brand mb-3">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="brand-logo me-2">
+                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M16 4L4 14V28H12V20H20V28H28V14L16 4Z" fill="url(#footerLogoGradient)" />
+                                    <defs>
+                                        <linearGradient id="footerLogoGradient" x1="4" y1="4" x2="28" y2="28"
+                                            gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#ec4899" />
+                                            <stop offset="1" stop-color="#8b5cf6" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <h5 class="mb-0 fw-bold">HousePredict AI</h5>
+                        </div>
+                        <p class="footer-text">
+                            AI-powered real estate valuation platform. Make smarter property decisions with machine
+                            learning.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="footer-heading mb-3">Quick Links</h6>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/predict">Predict Price</a></li>
+                        <li><a href="/dashboard">Dashboard</a></li>
+                        <li><a href="/analytics">Analytics</a></li>
+                        <li><a href="/about">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="footer-heading mb-3">Resources</h6>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="/#features">Features</a></li>
+                        <li><a href="/#stats">Statistics</a></li>
+                        <li><a href="/analytics">Data Insights</a></li>
+                        <li><a href="/about">Technology</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <h6 class="footer-heading mb-3">Connect With Us</h6>
+                    <div class="footer-contact mb-3">
+                        <a href="mailto:ankit9905163014@gmail.com" class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>ankit9905163014@gmail.com</span>
+                        </a>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://github.com/Ankit2006Raj" target="_blank" rel="noopener noreferrer"
+                            class="social-link" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/ankit-raj-226a36309" target="_blank"
+                            rel="noopener noreferrer" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="mailto:ankit9905163014@gmail.com" class="social-link" title="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom mt-4 pt-4">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <p class="mb-0 footer-copyright">
+                            &copy; 2024 HousePredict AI. All rights reserved.
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <p class="mb-0 footer-credit">
+                            Built with <i class="fas fa-heart text-danger"></i> by <a
+                                href="https://github.com/Ankit2006Raj" target="_blank" class="creator-link">Ankit
+                                Raj</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict Price - HousePredict AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/colors.css') }}">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <div class="brand-logo me-2">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 4L4 14V28H12V20H20V28H28V14L16 4Z" fill="url(#logoGradient)" />
+                        <defs>
+                            <linearGradient id="logoGradient" x1="4" y1="4" x2="28" y2="28"
+                                gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#ec4899" />
+                                <stop offset="1" stop-color="#8b5cf6" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <span>HousePredict AI</span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/predict">Predict</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/analytics">Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <button id="themeToggle" class="theme-toggle" title="Toggle Theme">
+                            <i class="fas fa-sun sun-icon"></i>
+                            <i class="fas fa-moon moon-icon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Modern Prediction Section -->
+    <section class="modern-prediction-section">
+        <div class="container">
+            <div class="row">
+                <!-- Left Side - Form -->
+                <div class="col-lg-7">
+                    <div class="prediction-header mb-4">
+                        <h1 class="display-5 fw-bold mb-2">
+                            <i class="fas fa-calculator me-3"></i>House Price Predictor
+                        </h1>
+                        <p class="lead">Enter property details for instant AI-powered valuation</p>
+                    </div>
+
+                    <!-- Progress Steps -->
+                    <div class="progress-steps mb-4">
+                        <div class="step active" data-step="1">
+                            <div class="step-number">1</div>
+                            <div class="step-label">Property Info</div>
+                        </div>
+                        <div class="step" data-step="2">
+                            <div class="step-number">2</div>
+                            <div class="step-label">Location</div>
+                        </div>
+                        <div class="step" data-step="3">
+                            <div class="step-number">3</div>
+                            <div class="step-label">Results</div>
+                        </div>
+                    </div>
+
+                    <!-- Prediction Form -->
+                    <form id="predictionForm" class="modern-form">
+                        <!-- Step 1: Property Details -->
+                        <div class="form-step active" data-step="1">
+                            <h4 class="step-title mb-4">
+                                <i class="fas fa-home me-2"></i>Property Details
+                            </h4>
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="modern-input-group">
+                                        <label><i class="fas fa-ruler-combined"></i> Area (sq ft)</label>
+                                        <input type="number" id="area" name="area" class="modern-input"
+                                            placeholder="e.g., 2500" required min="500" max="5000">
+                                        <small class="input-hint">Range: 500 - 5000 sq ft</small>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="modern-input-group">
+                                        <label><i class="fas fa-calendar"></i> Year Built</label>
+                                        <input type="number" id="yearBuilt" name="yearBuilt" class="modern-input"
+                                            placeholder="e.g., 2010" required min="1900" max="2024">
+                                        <small class="input-hint">Range: 1900 - 2024</small>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="modern-input-group">
+                                        <label><i class="fas fa-bed"></i> Bedrooms</label>
+                                        <select id="bedrooms" name="bedrooms" class="modern-select" required>
+                                            <option value="">Select</option>
+                                            <option value="1">1 Bedroom</option>
+                                            <option value="2">2 Bedrooms</option>
+                                            <option value="3">3 Bedrooms</option>
+                                            <option value="4">4 Bedrooms</option>
+                                            <option value="5">5 Bedrooms</option>
+                                            <option value="6">6+ Bedrooms</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="modern-input-group">
+                                        <label><i class="fas fa-bath"></i> Bathrooms</label>
+                                        <select id="bathrooms" name="bathrooms" class="modern-select" required>
+                                            <option value="">Select</option>
+                                            <option value="1">1 Bathroom</option>
+                                            <option value="2">2 Bathrooms</option>
+                                            <option value="3">3 Bathrooms</option>
+                                            <option value="4">4 Bathrooms</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="modern-input-group">
+                                        <label><i class="fas fa-building"></i> Floors</label>
+                                        <select id="floors" name="floors" class="modern-select" required>
+                                            <option value="">Select</option>
+                                            <option value="1">1 Floor</option>
+                                            <option value="2">2 Floors</option>
+                                            <option value="3">3 Floors</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-primary btn-lg w-100 mt-4" onclick="nextStep(2)">
+                                Continue <i class="fas fa-arrow-right ms-2"></i>
+                            </button>
+                        </div>
+
+                        <!-- Step 2: Location & Condition -->
+                        <div class="form-step" data-step="2">
+                            <h4 class="step-title mb-4">
+                                <i class="fas fa-map-marker-alt me-2"></i>Location & Condition
+                            </h4>
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="modern-input-group">
+                                        <label><i class="fas fa-location-dot"></i> Location</label>
+                                        <select id="location" name="location" class="modern-select" required>
+                                            <option value="">Select Location</option>
+                                            <option value="0">Downtown</option>
+                                            <option value="1">Rural</option>
+                                            <option value="2">Suburban</option>
+                                            <option value="3">Urban</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="modern-input-group">
+                                        <label><i class="fas fa-star"></i> Condition</label>
+                                        <select id="condition" name="condition" class="modern-select" required>
+                                            <option value="">Select Condition</option>
+                                            <option value="0">Excellent</option>
+                                            <option value="2">Good</option>
+                                            <option value="1">Fair</option>
+                                            <option value="3">Poor</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="modern-input-group">
+                                        <label><i class="fas fa-car"></i> Garage</label>
+                                        <div class="toggle-group">
+                                            <input type="radio" id="garageYes" name="garage" value="1" required>
+                                            <label for="garageYes" class="toggle-option">
+                                                <i class="fas fa-check"></i> Yes
+                                            </label>
+                                            <input type="radio" id="garageNo" name="garage" value="0">
+                                            <label for="garageNo" class="toggle-option">
+                                                <i class="fas fa-times"></i> No
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-3 mt-4">
+                                <button type="button" class="btn btn-outline-light btn-lg flex-fill"
+                                    onclick="prevStep(1)">
+                                    <i class="fas fa-arrow-left me-2"></i> Back
+                                </button>
+                                <button type="submit" class="btn btn-primary btn-lg flex-fill">
+                                    <i class="fas fa-magic me-2"></i> Predict Price
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Loading State -->
+                    <div id="loadingState" class="loading-state" style="display: none;">
+                        <div class="loading-animation">
+                            <div class="spinner"></div>
+                            <h4>Analyzing Property...</h4>
+                            <p>Our AI is calculating the perfect price</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side - Preview & Result -->
+                <div class="col-lg-5">
+                    <!-- Property Preview Card -->
+                    <div id="propertyPreview" class="property-preview-card">
+                        <h5 class="mb-3">
+                            <i class="fas fa-eye me-2"></i>Property Preview
+                        </h5>
+                        <div class="preview-content">
+                            <div class="preview-item">
+                                <span class="preview-label">Area</span>
+                                <span class="preview-value" id="previewArea">-</span>
+                            </div>
+                            <div class="preview-item">
+                                <span class="preview-label">Bedrooms</span>
+                                <span class="preview-value" id="previewBedrooms">-</span>
+                            </div>
+                            <div class="preview-item">
+                                <span class="preview-label">Bathrooms</span>
+                                <span class="preview-value" id="previewBathrooms">-</span>
+                            </div>
+                            <div class="preview-item">
+                                <span class="preview-label">Floors</span>
+                                <span class="preview-value" id="previewFloors">-</span>
+                            </div>
+                            <div class="preview-item">
+                                <span class="preview-label">Year Built</span>
+                                <span class="preview-value" id="previewYear">-</span>
+                            </div>
+                            <div class="preview-item">
+                                <span class="preview-label">Location</span>
+                                <span class="preview-value" id="previewLocation">-</span>
+                            </div>
+                            <div class="preview-item">
+                                <span class="preview-label">Condition</span>
+                                <span class="preview-value" id="previewCondition">-</span>
+                            </div>
+                            <div class="preview-item">
+                                <span class="preview-label">Garage</span>
+                                <span class="preview-value" id="previewGarage">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Result Card -->
+                    <div id="resultCard" class="result-card-modern" style="display: none;">
+                        <div class="result-header">
+                            <i class="fas fa-check-circle"></i>
+                            <h4>Prediction Complete!</h4>
+                        </div>
+                        <div class="result-body">
+                            <div class="predicted-price-modern" id="predictedPrice">$0</div>
+                            <p class="result-subtitle">Estimated Market Value</p>
+
+                            <div class="result-actions">
+                                <button class="btn btn-outline-light" onclick="location.reload()">
+                                    <i class="fas fa-redo me-2"></i>New Prediction
+                                </button>
+                                <a href="/dashboard" class="btn btn-primary">
+                                    <i class="fas fa-chart-line me-2"></i>View Dashboard
+                                </a>
+                            </div>
+
+                            <!-- Success Toast -->
+                            <div class="success-toast">
+                                <i class="fas fa-check-circle me-2"></i>
+                                Saved to history!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5 mt-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-brand mb-3">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="brand-logo me-2">
+                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M16 4L4 14V28H12V20H20V28H28V14L16 4Z" fill="url(#footerLogoGradient)" />
+                                    <defs>
+                                        <linearGradient id="footerLogoGradient" x1="4" y1="4" x2="28" y2="28"
+                                            gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#ec4899" />
+                                            <stop offset="1" stop-color="#8b5cf6" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <h5 class="mb-0 fw-bold">HousePredict AI</h5>
+                        </div>
+                        <p class="footer-text">
+                            AI-powered real estate valuation platform. Make smarter property decisions with machine
+                            learning.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="footer-heading mb-3">Quick Links</h6>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/predict">Predict Price</a></li>
+                        <li><a href="/dashboard">Dashboard</a></li>
+                        <li><a href="/analytics">Analytics</a></li>
+                        <li><a href="/about">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="footer-heading mb-3">Resources</h6>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="/#features">Features</a></li>
+                        <li><a href="/#stats">Statistics</a></li>
+                        <li><a href="/analytics">Data Insights</a></li>
+                        <li><a href="/about">Technology</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <h6 class="footer-heading mb-3">Connect With Us</h6>
+                    <div class="footer-contact mb-3">
+                        <a href="mailto:ankit9905163014@gmail.com" class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>ankit9905163014@gmail.com</span>
+                        </a>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://github.com/Ankit2006Raj" target="_blank" rel="noopener noreferrer"
+                            class="social-link" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/ankit-raj-226a36309" target="_blank"
+                            rel="noopener noreferrer" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="mailto:ankit9905163014@gmail.com" class="social-link" title="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom mt-4 pt-4">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <p class="mb-0 footer-copyright">
+                            &copy; 2024 HousePredict AI. All rights reserved.
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <p class="mb-0 footer-credit">
+                            Built with <i class="fas fa-heart text-danger"></i> by <a
+                                href="https://github.com/Ankit2006Raj" target="_blank" class="creator-link">Ankit
+                                Raj</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modern-predict.js') }}"></script>
+</body>
+
+</html>

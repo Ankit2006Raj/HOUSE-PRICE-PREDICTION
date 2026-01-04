@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - HousePredict AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/colors.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/analytics.css') }}">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <div class="brand-logo me-2">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 4L4 14V28H12V20H20V28H28V14L16 4Z" fill="url(#logoGradient)" />
+                        <defs>
+                            <linearGradient id="logoGradient" x1="4" y1="4" x2="28" y2="28"
+                                gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#ec4899" />
+                                <stop offset="1" stop-color="#8b5cf6" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <span>HousePredict AI</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/predict">Predict Price</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/analytics">Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <button id="themeToggle" class="theme-toggle" title="Toggle Theme">
+                            <i class="fas fa-sun sun-icon"></i>
+                            <i class="fas fa-moon moon-icon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Analytics Section -->
+    <section class="analytics-section py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h1 class="display-4 fw-bold mb-3">
+                    <i class="fas fa-chart-line text-primary"></i> Data Analytics & Insights
+                </h1>
+                <p class="lead text-muted">Comprehensive analysis of real estate market trends</p>
+            </div>
+
+            <!-- Analytics Controls -->
+            <div class="analytics-controls mb-4">
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-3">
+                        <select id="chartFilter" class="form-select modern-select">
+                            <option value="all">All Charts</option>
+                            <option value="distribution">Distribution Analysis</option>
+                            <option value="correlation">Correlation Analysis</option>
+                            <option value="location">Location Analysis</option>
+                            <option value="features">Feature Analysis</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select id="timeRange" class="form-select modern-select">
+                            <option value="all">All Time</option>
+                            <option value="recent">Last 5 Years</option>
+                            <option value="decade">Last 10 Years</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <button id="refreshData" class="btn btn-primary w-100">
+                            <i class="fas fa-sync-alt me-2"></i>Refresh Data
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button id="downloadReport" class="btn btn-success w-100">
+                            <i class="fas fa-download me-2"></i>Download Report
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Metrics Dashboard -->
+            <div class="metrics-dashboard mb-5">
+                <div class="row g-4">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <div class="metric-content">
+                                <h3 id="totalProperties">-</h3>
+                                <p>Total Properties</p>
+                                <span class="metric-change positive">
+                                    <i class="fas fa-arrow-up"></i> 12.5%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="metric-content">
+                                <h3 id="avgPrice">-</h3>
+                                <p>Average Price</p>
+                                <span class="metric-change positive">
+                                    <i class="fas fa-arrow-up"></i> 8.3%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="metric-content">
+                                <h3 id="medianPrice">-</h3>
+                                <p>Median Price</p>
+                                <span class="metric-change positive">
+                                    <i class="fas fa-arrow-up"></i> 5.7%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-ruler-combined"></i>
+                            </div>
+                            <div class="metric-content">
+                                <h3 id="avgArea">-</h3>
+                                <p>Avg Area (sq ft)</p>
+                                <span class="metric-change neutral">
+                                    <i class="fas fa-minus"></i> 0.2%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualization Grid -->
+            <div class="row g-4" id="chartsContainer">
+                <!-- Price Distribution -->
+                <div class="col-lg-6">
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-chart-bar me-2"></i>Price Distribution</h5>
+                        </div>
+                        <div class="card-body">
+                            <img src="{{ url_for('static', filename='images/price_distribution.png') }}"
+                                alt="Price Distribution" class="img-fluid rounded">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Correlation Heatmap -->
+                <div class="col-lg-6">
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-fire me-2"></i>Feature Correlation</h5>
+                        </div>
+                        <div class="card-body">
+                            <img src="{{ url_for('static', filename='images/correlation_heatmap.png') }}"
+                                alt="Correlation Heatmap" class="img-fluid rounded">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price vs Area -->
+                <div class="col-lg-6">
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-ruler-combined me-2"></i>Price vs Area Analysis</h5>
+                        </div>
+                        <div class="card-body">
+                            <img src="{{ url_for('static', filename='images/price_vs_area.png') }}" alt="Price vs Area"
+                                class="img-fluid rounded">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price by Location -->
+                <div class="col-lg-6">
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-map-marker-alt me-2"></i>Price by Location</h5>
+                        </div>
+                        <div class="card-body">
+                            <img src="{{ url_for('static', filename='images/price_by_location.png') }}"
+                                alt="Price by Location" class="img-fluid rounded">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price by Condition -->
+                <div class="col-lg-6">
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-star me-2"></i>Price by Condition</h5>
+                        </div>
+                        <div class="card-body">
+                            <img src="{{ url_for('static', filename='images/price_by_condition.png') }}"
+                                alt="Price by Condition" class="img-fluid rounded">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price by Bedrooms -->
+                <div class="col-lg-6">
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-bed me-2"></i>Price by Bedrooms</h5>
+                        </div>
+                        <div class="card-body">
+                            <img src="{{ url_for('static', filename='images/price_by_bedrooms.png') }}"
+                                alt="Price by Bedrooms" class="img-fluid rounded">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Year Built Analysis -->
+                <div class="col-lg-12">
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-calendar me-2"></i>Year Built Analysis</h5>
+                        </div>
+                        <div class="card-body">
+                            <img src="{{ url_for('static', filename='images/year_built_analysis.png') }}"
+                                alt="Year Built Analysis" class="img-fluid rounded">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Market Trends -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="insights-card">
+                        <h3 class="mb-4"><i class="fas fa-chart-line text-primary me-2"></i>Market Trends</h3>
+                        <div class="row g-4">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="trend-card">
+                                    <div class="trend-icon bg-success">
+                                        <i class="fas fa-arrow-trend-up"></i>
+                                    </div>
+                                    <h4 id="priceGrowth">+8.3%</h4>
+                                    <p>YoY Price Growth</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="trend-card">
+                                    <div class="trend-icon bg-info">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <h4 id="avgDaysMarket">45 days</h4>
+                                    <p>Avg Days on Market</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="trend-card">
+                                    <div class="trend-icon bg-warning">
+                                        <i class="fas fa-fire"></i>
+                                    </div>
+                                    <h4 id="hotLocations">Downtown</h4>
+                                    <p>Hottest Location</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="trend-card">
+                                    <div class="trend-icon bg-danger">
+                                        <i class="fas fa-percentage"></i>
+                                    </div>
+                                    <h4 id="pricePerSqft">$198</h4>
+                                    <p>Avg Price per Sq Ft</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Insights -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="insights-card">
+                        <h3 class="mb-4"><i class="fas fa-lightbulb text-warning me-2"></i>Key Insights</h3>
+                        <div class="row g-4">
+                            <div class="col-md-4">
+                                <div class="insight-item">
+                                    <i class="fas fa-arrow-up text-success fa-2x mb-3"></i>
+                                    <h5>Area Impact</h5>
+                                    <p>Property area shows strong positive correlation with price. Larger homes command
+                                        premium prices.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="insight-item">
+                                    <i class="fas fa-map-marked-alt text-primary fa-2x mb-3"></i>
+                                    <h5>Location Matters</h5>
+                                    <p>Downtown and Urban locations have higher average prices compared to Rural and
+                                        Suburban areas.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="insight-item">
+                                    <i class="fas fa-star text-warning fa-2x mb-3"></i>
+                                    <h5>Condition Premium</h5>
+                                    <p>Excellent condition properties can command up to 40% higher prices than poor
+                                        condition ones.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Export Section -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="export-card">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h4><i class="fas fa-file-export me-2"></i>Export Analytics Data</h4>
+                                <p class="mb-0">Download comprehensive reports and raw data for further analysis</p>
+                            </div>
+                            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                                <button class="btn btn-outline-primary me-2" onclick="analyticsManager.exportCSV()">
+                                    <i class="fas fa-file-csv me-2"></i>Export CSV
+                                </button>
+                                <button class="btn btn-primary" onclick="analyticsManager.exportPDF()">
+                                    <i class="fas fa-file-pdf me-2"></i>Export PDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modern Footer -->
+    <footer class="footer py-5 mt-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Brand Section -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-brand mb-3">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="brand-logo me-2">
+                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M16 4L4 14V28H12V20H20V28H28V14L16 4Z" fill="url(#footerLogoGradient)" />
+                                    <defs>
+                                        <linearGradient id="footerLogoGradient" x1="4" y1="4" x2="28" y2="28"
+                                            gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#ec4899" />
+                                            <stop offset="1" stop-color="#8b5cf6" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <h5 class="mb-0 fw-bold">HousePredict AI</h5>
+                        </div>
+                        <p class="footer-text">
+                            AI-powered real estate valuation platform. Make smarter property decisions with machine
+                            learning.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="footer-heading mb-3">Quick Links</h6>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/predict">Predict Price</a></li>
+                        <li><a href="/analytics">Analytics</a></li>
+                        <li><a href="/about">About Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Resources -->
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="footer-heading mb-3">Resources</h6>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="/#features">Features</a></li>
+                        <li><a href="/#stats">Statistics</a></li>
+                        <li><a href="/analytics">Data Insights</a></li>
+                        <li><a href="/about">Technology</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact & Social -->
+                <div class="col-lg-4 col-md-6">
+                    <h6 class="footer-heading mb-3">Connect With Us</h6>
+                    <div class="footer-contact mb-3">
+                        <a href="mailto:ankit9905163014@gmail.com" class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>ankit9905163014@gmail.com</span>
+                        </a>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://github.com/Ankit2006Raj" target="_blank" rel="noopener noreferrer"
+                            class="social-link" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/ankit-raj-226a36309" target="_blank"
+                            rel="noopener noreferrer" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="mailto:ankit9905163014@gmail.com" class="social-link" title="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom mt-4 pt-4">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <p class="mb-0 footer-copyright">
+                            &copy; 2024 HousePredict AI. All rights reserved.
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <p class="mb-0 footer-credit">
+                            Built with <i class="fas fa-heart text-danger"></i> by <a
+                                href="https://github.com/Ankit2006Raj" target="_blank" class="creator-link">Ankit
+                                Raj</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/analytics.js') }}"></script>
+</body>
+
+</html>
