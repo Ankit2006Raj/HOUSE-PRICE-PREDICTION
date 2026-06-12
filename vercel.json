@@ -13,15 +13,24 @@
   "routes": [
     {
       "src": "/static/images/(.*)",
-      "dest": "/static/images/$1"
+      "dest": "/static/images/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
     },
     {
       "src": "/static/css/(.*)",
-      "dest": "/static/css/$1"
+      "dest": "/static/css/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
     },
     {
       "src": "/static/js/(.*)",
-      "dest": "/static/js/$1"
+      "dest": "/static/js/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
     },
     {
       "src": "/static/data/(.*)",
