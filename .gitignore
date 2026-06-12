@@ -33,10 +33,10 @@ ENV/
 *.swo
 *~
 
-# Models and Data
-models/*.pkl
-static/data/*.csv
-static/images/*.png
+# Models and Data (commented out for Vercel deployment - these must be committed)
+# models/*.pkl
+# static/data/*.csv
+# static/images/*.png
 
 # OS
 .DS_Store

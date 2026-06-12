@@ -4,11 +4,16 @@ import numpy as np
 import pandas as pd
 import os
 
-app = Flask(__name__)
+# Base directory for resolving all relative paths (Vercel compatible)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+app = Flask(__name__,
+            static_folder=os.path.join(BASE_DIR, 'static'),
+            template_folder=os.path.join(BASE_DIR, 'templates'))
 
 # Load the trained model
-MODEL_PATH = 'models/house_price_model.pkl'
-SCALER_PATH = 'models/scaler.pkl'
+MODEL_PATH = os.path.join(BASE_DIR, 'models', 'house_price_model.pkl')
+SCALER_PATH = os.path.join(BASE_DIR, 'models', 'scaler.pkl')
 
 model = None
 scaler = None
@@ -80,8 +85,8 @@ def predict():
 
 @app.route('/api/model-info', methods=['GET'])
 def model_info():
-    if os.path.exists('models/model_metrics.pkl'):
-        with open('models/model_metrics.pkl', 'rb') as f:
+    if os.path.exists(os.path.join(BASE_DIR, 'models', 'model_metrics.pkl')):
+        with open(os.path.join(BASE_DIR, 'models', 'model_metrics.pkl'), 'rb') as f:
             metrics = pickle.load(f)
         return jsonify(metrics)
     return jsonify({'error': 'Model metrics not available'}), 404
@@ -92,8 +97,8 @@ def analytics_data():
     try:
         # Try to load the dataset
         dataset_paths = [
-            'Dataset/House Price Prediction Dataset.csv',
-            'static/data/processed_data.csv'
+            os.path.join(BASE_DIR, 'Dataset', 'House Price Prediction Dataset.csv'),
+            os.path.join(BASE_DIR, 'static', 'data', 'processed_data.csv')
         ]
         
         df = None
@@ -162,11 +167,11 @@ def analytics_data():
             'priceStd': 125000.00
         })
 
+# Auto-load model on import (needed for Vercel serverless)
+if load_model():
+    print("[OK] Model loaded successfully!")
+else:
+    print("[WARN] Model not found. Please run train_model.py first.")
+
 if __name__ == '__main__':
-    # Try to load model
-    if load_model():
-        print("✓ Model loaded successfully!")
-    else:
-        print("⚠ Model not found. Please run train_model.py first.")
-    
     app.run(debug=True, host='0.0.0.0', port=5000)
