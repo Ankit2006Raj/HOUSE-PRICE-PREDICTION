@@ -1,5 +1,5 @@
 """
-Setup script for House Price Prediction Project
+Setup script for Smart Property Project
 This script automates the complete setup process
 """
 
@@ -41,9 +41,9 @@ def create_directories():
     print("✓ All directories created!")
 
 def main():
-    print_header("🏡 HOUSE PRICE PREDICTION - SETUP")
+    print_header("🏡 SMART PROPERTY - SETUP")
     
-    print("Welcome to the House Price Prediction setup wizard!")
+    print("Welcome to the Smart Property setup wizard!")
     print("This script will set up everything you need to run the application.\n")
     
     # Step 1: Create directories
@@ -87,7 +87,7 @@ def main():
     
     # Success message
     print_header("✅ SETUP COMPLETED SUCCESSFULLY!")
-    print("Your House Price Prediction application is ready to use!\n")
+    print("    Your Smart Property application is ready to use!\n")
     print("📝 Next steps:")
     print("   1. Run the application: python app.py")
     print("   2. Open your browser: http://localhost:5000")
@@ -102,7 +102,7 @@ def main():
         try:
             subprocess.run(f"{sys.executable} app.py", shell=True)
         except KeyboardInterrupt:
-            print("\n\n👋 Application stopped. Thank you for using HousePredict AI!")
+            print("\n\n👋 Application stopped. Thank you for using Smart Property!")
 
 if __name__ == "__main__":
     try:

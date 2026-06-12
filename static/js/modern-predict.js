@@ -8,10 +8,28 @@ document.addEventListener('DOMContentLoaded', () => {
 function initializeForm() {
     const form = document.getElementById('predictionForm');
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        await handlePrediction();
-    });
+    if (form) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await handlePrediction();
+        });
+    }
+
+    // Prefill from URL query params
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('area')) {
+        const area = document.getElementById('area');
+        if (area) area.value = urlParams.get('area');
+    }
+    if (urlParams.has('location')) {
+        const location = document.getElementById('location');
+        if (location) location.value = urlParams.get('location');
+    }
+    if (urlParams.has('condition')) {
+        const condition = document.getElementById('condition');
+        if (condition) condition.value = urlParams.get('condition');
+    }
+    updatePreview();
 }
 
 // Step navigation

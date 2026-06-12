@@ -40,13 +40,19 @@ print(f"✓ Dataset loaded: {df.shape[0]} rows, {df.shape[1]} columns")
 # Set style
 sns.set_style("whitegrid")
 plt.rcParams['figure.figsize'] = (12, 6)
+plt.rcParams['figure.facecolor'] = '#FAF9F5'
+plt.rcParams['axes.facecolor'] = '#FFFFFF'
+plt.rcParams['text.color'] = '#1C2E1A'
+plt.rcParams['axes.labelcolor'] = '#1C2E1A'
+plt.rcParams['xtick.color'] = '#1C2E1A'
+plt.rcParams['ytick.color'] = '#1C2E1A'
 
 # 1. Price Distribution
 print("\n📈 Generating Price Distribution plot...")
 plt.figure(figsize=(12, 5))
 
 plt.subplot(1, 2, 1)
-plt.hist(df['Price'], bins=50, color='#4CAF50', edgecolor='black', alpha=0.7)
+plt.hist(df['Price'], bins=50, color='#5E8256', edgecolor='#1C2E1A', alpha=0.8)
 plt.xlabel('Price ($)', fontsize=12)
 plt.ylabel('Frequency', fontsize=12)
 plt.title('House Price Distribution', fontsize=14, fontweight='bold')
@@ -54,7 +60,7 @@ plt.grid(axis='y', alpha=0.3)
 
 plt.subplot(1, 2, 2)
 plt.boxplot(df['Price'], vert=True, patch_artist=True,
-            boxprops=dict(facecolor='#4CAF50', alpha=0.7))
+            boxprops=dict(facecolor='#8EB486', color='#1C2E1A', alpha=0.8))
 plt.ylabel('Price ($)', fontsize=12)
 plt.title('Price Boxplot (Outlier Detection)', fontsize=14, fontweight='bold')
 plt.grid(axis='y', alpha=0.3)
@@ -70,7 +76,7 @@ numeric_cols = ['Area', 'Bedrooms', 'Bathrooms', 'Floors', 'YearBuilt', 'Price']
 correlation = df[numeric_cols].corr()
 
 plt.figure(figsize=(10, 8))
-sns.heatmap(correlation, annot=True, fmt='.2f', cmap='RdYlGn', center=0,
+sns.heatmap(correlation, annot=True, fmt='.2f', cmap='YlGn', center=0.5,
             square=True, linewidths=1, cbar_kws={"shrink": 0.8})
 plt.title('Feature Correlation Heatmap', fontsize=16, fontweight='bold', pad=20)
 plt.tight_layout()
@@ -81,7 +87,7 @@ print("✓ Saved: correlation_heatmap.png")
 # 3. Price vs Area
 print("\n📐 Generating Price vs Area plot...")
 plt.figure(figsize=(12, 6))
-plt.scatter(df['Area'], df['Price'], alpha=0.5, c='#2196F3', edgecolors='black', linewidth=0.5)
+plt.scatter(df['Area'], df['Price'], alpha=0.6, c='#8EB486', edgecolors='#1C2E1A', linewidth=0.5)
 plt.xlabel('Area (sq ft)', fontsize=12)
 plt.ylabel('Price ($)', fontsize=12)
 plt.title('House Price vs Area', fontsize=14, fontweight='bold')
@@ -90,7 +96,7 @@ plt.grid(alpha=0.3)
 # Add trend line
 z = np.polyfit(df['Area'], df['Price'], 1)
 p = np.poly1d(z)
-plt.plot(df['Area'], p(df['Area']), "r--", linewidth=2, label='Trend Line')
+plt.plot(df['Area'], p(df['Area']), color='#C5A880', linestyle='--', linewidth=2, label='Trend Line')
 plt.legend()
 
 plt.tight_layout()
@@ -102,8 +108,8 @@ print("✓ Saved: price_vs_area.png")
 print("\n🌍 Generating Price by Location plot...")
 plt.figure(figsize=(12, 6))
 location_price = df.groupby('Location')['Price'].mean().sort_values(ascending=False)
-colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A']
-location_price.plot(kind='bar', color=colors, edgecolor='black', linewidth=1.2)
+colors = ['#2C4C30', '#5E8256', '#8EB486', '#C5A880']
+location_price.plot(kind='bar', color=colors, edgecolor='#1C2E1A', linewidth=1.2)
 plt.xlabel('Location', fontsize=12)
 plt.ylabel('Average Price ($)', fontsize=12)
 plt.title('Average House Price by Location', fontsize=14, fontweight='bold')
@@ -119,8 +125,8 @@ print("\n⭐ Generating Price by Condition plot...")
 plt.figure(figsize=(12, 6))
 condition_order = ['Poor', 'Fair', 'Good', 'Excellent']
 condition_price = df.groupby('Condition')['Price'].mean().reindex(condition_order)
-colors_condition = ['#E74C3C', '#F39C12', '#3498DB', '#2ECC71']
-condition_price.plot(kind='bar', color=colors_condition, edgecolor='black', linewidth=1.2)
+colors_condition = ['#C5A880', '#8EB486', '#5E8256', '#2C4C30']
+condition_price.plot(kind='bar', color=colors_condition, edgecolor='#1C2E1A', linewidth=1.2)
 plt.xlabel('Condition', fontsize=12)
 plt.ylabel('Average Price ($)', fontsize=12)
 plt.title('Average House Price by Condition', fontsize=14, fontweight='bold')
@@ -136,7 +142,7 @@ print("\n🛏️ Generating Bedrooms vs Price plot...")
 plt.figure(figsize=(12, 6))
 bedroom_price = df.groupby('Bedrooms')['Price'].mean()
 plt.plot(bedroom_price.index, bedroom_price.values, marker='o', linewidth=2, 
-         markersize=10, color='#9B59B6', markerfacecolor='#E74C3C', markeredgewidth=2)
+         markersize=10, color='#2C4C30', markerfacecolor='#C5A880', markeredgewidth=2)
 plt.xlabel('Number of Bedrooms', fontsize=12)
 plt.ylabel('Average Price ($)', fontsize=12)
 plt.title('Average Price by Number of Bedrooms', fontsize=14, fontweight='bold')
@@ -150,14 +156,14 @@ print("✓ Saved: price_by_bedrooms.png")
 print("\n📅 Generating Year Built analysis...")
 plt.figure(figsize=(12, 6))
 plt.subplot(1, 2, 1)
-plt.hist(df['YearBuilt'], bins=30, color='#FF9800', edgecolor='black', alpha=0.7)
+plt.hist(df['YearBuilt'], bins=30, color='#8EB486', edgecolor='#1C2E1A', alpha=0.8)
 plt.xlabel('Year Built', fontsize=12)
 plt.ylabel('Frequency', fontsize=12)
 plt.title('Distribution of Year Built', fontsize=14, fontweight='bold')
 plt.grid(axis='y', alpha=0.3)
 
 plt.subplot(1, 2, 2)
-plt.scatter(df['YearBuilt'], df['Price'], alpha=0.5, c='#FF9800', edgecolors='black', linewidth=0.5)
+plt.scatter(df['YearBuilt'], df['Price'], alpha=0.6, c='#5E8256', edgecolors='#1C2E1A', linewidth=0.5)
 plt.xlabel('Year Built', fontsize=12)
 plt.ylabel('Price ($)', fontsize=12)
 plt.title('Price vs Year Built', fontsize=14, fontweight='bold')

@@ -4,35 +4,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analytics - HousePredict AI</title>
+    <title>Analytics - Smart Property</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/colors.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/analytics.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    
+    <style>
+        .analytics-section {
+            padding-top: 140px;
+            padding-bottom: 80px;
+            background-color: var(--bg-space);
+        }
+        
+        .analytics-section h1 {
+            color: var(--text-bright);
+            font-family: 'Outfit', sans-serif;
+            text-shadow: none !important;
+        }
+        
+        .analytics-controls {
+            background: #FFFFFF;
+            border: 1px solid var(--brand-pale-sage);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-blue);
+        }
+        
+        html[data-theme="dark"] .analytics-controls {
+            background: var(--bg-card);
+        }
+        
+        .metric-card {
+            background: #FFFFFF !important;
+            border: 1px solid var(--brand-pale-sage) !important;
+            box-shadow: var(--shadow-blue) !important;
+            border-radius: 16px !important;
+        }
+        
+        html[data-theme="dark"] .metric-card {
+            background: var(--bg-card) !important;
+        }
+        
+        .metric-icon {
+            background: var(--brand-pale-sage) !important;
+            color: var(--brand-forest) !important;
+        }
+        
+        .analytics-card {
+            background: #FFFFFF !important;
+            border: 1px solid var(--brand-pale-sage) !important;
+            border-radius: 20px !important;
+            box-shadow: var(--shadow-blue) !important;
+            overflow: hidden;
+        }
+        
+        html[data-theme="dark"] .analytics-card {
+            background: var(--bg-card) !important;
+        }
+        
+        .analytics-card .card-header {
+            background: var(--brand-pale-sage) !important;
+            color: var(--brand-forest) !important;
+            border-bottom: 1px solid var(--brand-pale-sage) !important;
+            padding: 1.25rem 1.5rem !important;
+        }
+        
+        .analytics-card .card-body {
+            background: transparent !important;
+            padding: 1.5rem !important;
+        }
+        
+        .insights-card, .export-card {
+            background: #FFFFFF !important;
+            border: 1px solid var(--brand-pale-sage) !important;
+            border-radius: 24px !important;
+            box-shadow: var(--shadow-blue) !important;
+            padding: 2.5rem !important;
+        }
+        
+        html[data-theme="dark"] .insights-card,
+        html[data-theme="dark"] .export-card {
+            background: var(--bg-card) !important;
+        }
+        
+        .trend-card {
+            background: var(--bg-deep) !important;
+            border: 1px solid var(--brand-pale-sage) !important;
+            border-radius: 16px !important;
+            box-shadow: none !important;
+        }
+        
+        .trend-icon.bg-success { background-color: var(--brand-forest) !important; }
+        .trend-icon.bg-info { background-color: var(--brand-sage) !important; }
+        .trend-icon.bg-warning { background-color: var(--brand-gold) !important; }
+        .trend-icon.bg-danger { background-color: var(--brand-terracotta) !important; }
+        
+        .insight-item {
+            background: var(--bg-deep) !important;
+            border-top: 4px solid var(--brand-sage) !important;
+            border-radius: 16px !important;
+            box-shadow: none !important;
+        }
+        
+        .insight-item:nth-child(1) { border-top-color: var(--brand-forest) !important; }
+        .insight-item:nth-child(2) { border-top-color: var(--brand-gold) !important; }
+        .insight-item:nth-child(3) { border-top-color: var(--brand-terracotta) !important; }
+        
+        .insight-item i {
+            color: var(--brand-forest) !important;
+        }
+        
+        .btn-success {
+            background-color: var(--brand-sage) !important;
+            border-color: var(--brand-sage) !important;
+            color: #FFFFFF !important;
+            border-radius: 50px !important;
+            font-weight: 600 !important;
+        }
+        
+        .btn-success:hover {
+            background-color: var(--brand-forest) !important;
+            border-color: var(--brand-forest) !important;
+        }
+        
+        .btn-outline-primary {
+            border-color: var(--brand-forest) !important;
+            color: var(--brand-forest) !important;
+            border-radius: 50px !important;
+            font-weight: 600 !important;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--brand-forest) !important;
+            color: #FFFFFF !important;
+        }
+        
+        html[data-theme="dark"] .btn-outline-primary {
+            border-color: var(--brand-sage) !important;
+            color: var(--brand-sage) !important;
+        }
+        
+        html[data-theme="dark"] .btn-outline-primary:hover {
+            background-color: var(--brand-sage) !important;
+            color: #0F1910 !important;
+        }
+    </style>
 </head>
 
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="/">
-                <div class="brand-logo me-2">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16 4L4 14V28H12V20H20V28H28V14L16 4Z" fill="url(#logoGradient)" />
-                        <defs>
-                            <linearGradient id="logoGradient" x1="4" y1="4" x2="28" y2="28"
-                                gradientUnits="userSpaceOnUse">
-                                <stop stop-color="#ec4899" />
-                                <stop offset="1" stop-color="#8b5cf6" />
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                </div>
-                <span>HousePredict AI</span>
+                <span style="font-family: 'Outfit'; font-weight: 900; color: var(--brand-forest);">Smart Property</span>
+                <i class="fas fa-leaf ms-2" style="color: var(--brand-sage); font-size: 1.2rem;"></i>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars" style="color: var(--brand-forest); font-size: 1.5rem;"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
@@ -41,6 +178,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/predict">Predict Price</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="/analytics">Analytics</a>
@@ -62,15 +202,15 @@
     <!-- Analytics Section -->
     <section class="analytics-section py-5">
         <div class="container">
-            <div class="text-center mb-5">
-                <h1 class="display-4 fw-bold mb-3">
-                    <i class="fas fa-chart-line text-primary"></i> Data Analytics & Insights
+            <div class="text-center mb-5 animate-fade-in">
+                <h1 class="display-5 fw-bold mb-3">
+                    <i class="fas fa-chart-line me-2" style="color: var(--brand-sage);"></i> Data Analytics & Insights
                 </h1>
-                <p class="lead text-muted">Comprehensive analysis of real estate market trends</p>
+                <p class="lead text-muted">Comprehensive analysis of eco-friendly real estate market trends</p>
             </div>
 
             <!-- Analytics Controls -->
-            <div class="analytics-controls mb-4">
+            <div class="analytics-controls mb-4 animate-fade-in-delay">
                 <div class="row g-3 align-items-center">
                     <div class="col-md-3">
                         <select id="chartFilter" class="form-select modern-select">
@@ -94,7 +234,7 @@
                         </button>
                     </div>
                     <div class="col-md-3">
-                        <button id="downloadReport" class="btn btn-success w-100">
+                        <button id="downloadReport" class="btn btn-success w-100 text-white">
                             <i class="fas fa-download me-2"></i>Download Report
                         </button>
                     </div>
@@ -102,7 +242,7 @@
             </div>
 
             <!-- Key Metrics Dashboard -->
-            <div class="metrics-dashboard mb-5">
+            <div class="metrics-dashboard mb-5 animate-fade-in-delay">
                 <div class="row g-4">
                     <div class="col-lg-3 col-md-6">
                         <div class="metric-card">
@@ -164,7 +304,7 @@
             </div>
 
             <!-- Visualization Grid -->
-            <div class="row g-4" id="chartsContainer">
+            <div class="row g-4 animate-fade-in-delay-2" id="chartsContainer">
                 <!-- Price Distribution -->
                 <div class="col-lg-6">
                     <div class="analytics-card">
@@ -258,10 +398,10 @@
             </div>
 
             <!-- Market Trends -->
-            <div class="row mt-5">
+            <div class="row mt-5 animate-fade-in-delay-2">
                 <div class="col-12">
                     <div class="insights-card">
-                        <h3 class="mb-4"><i class="fas fa-chart-line text-primary me-2"></i>Market Trends</h3>
+                        <h3 class="mb-4"><i class="fas fa-chart-line text-success me-2"></i>Market Trends</h3>
                         <div class="row g-4">
                             <div class="col-lg-3 col-md-6">
                                 <div class="trend-card">
@@ -305,33 +445,30 @@
             </div>
 
             <!-- Key Insights -->
-            <div class="row mt-4">
+            <div class="row mt-4 animate-fade-in-delay-2">
                 <div class="col-12">
                     <div class="insights-card">
                         <h3 class="mb-4"><i class="fas fa-lightbulb text-warning me-2"></i>Key Insights</h3>
                         <div class="row g-4">
                             <div class="col-md-4">
                                 <div class="insight-item">
-                                    <i class="fas fa-arrow-up text-success fa-2x mb-3"></i>
+                                    <i class="fas fa-arrow-up fa-2x mb-3"></i>
                                     <h5>Area Impact</h5>
-                                    <p>Property area shows strong positive correlation with price. Larger homes command
-                                        premium prices.</p>
+                                    <p class="text-muted">Property area shows strong positive correlation with price. Larger homes command premium prices.</p>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="insight-item">
-                                    <i class="fas fa-map-marked-alt text-primary fa-2x mb-3"></i>
+                                    <i class="fas fa-map-marked-alt fa-2x mb-3"></i>
                                     <h5>Location Matters</h5>
-                                    <p>Downtown and Urban locations have higher average prices compared to Rural and
-                                        Suburban areas.</p>
+                                    <p class="text-muted">Downtown and Urban locations have higher average prices compared to Rural and Suburban areas.</p>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="insight-item">
-                                    <i class="fas fa-star text-warning fa-2x mb-3"></i>
+                                    <i class="fas fa-star fa-2x mb-3"></i>
                                     <h5>Condition Premium</h5>
-                                    <p>Excellent condition properties can command up to 40% higher prices than poor
-                                        condition ones.</p>
+                                    <p class="text-muted">Excellent condition properties command up to 40% higher valuations than poor condition ones.</p>
                                 </div>
                             </div>
                         </div>
@@ -340,13 +477,13 @@
             </div>
 
             <!-- Data Export Section -->
-            <div class="row mt-4">
+            <div class="row mt-4 animate-fade-in-delay-2">
                 <div class="col-12">
                     <div class="export-card">
                         <div class="row align-items-center">
                             <div class="col-md-8">
-                                <h4><i class="fas fa-file-export me-2"></i>Export Analytics Data</h4>
-                                <p class="mb-0">Download comprehensive reports and raw data for further analysis</p>
+                                <h4><i class="fas fa-file-export me-2" style="color: var(--brand-sage);"></i>Export Analytics Data</h4>
+                                <p class="mb-0 text-muted">Download comprehensive reports and raw data for further analysis</p>
                             </div>
                             <div class="col-md-4 text-md-end mt-3 mt-md-0">
                                 <button class="btn btn-outline-primary me-2" onclick="analyticsManager.exportCSV()">
@@ -364,95 +501,68 @@
     </section>
 
     <!-- Modern Footer -->
-    <footer class="footer py-5 mt-5">
+    <footer class="footer py-5">
         <div class="container">
             <div class="row g-4">
-                <!-- Brand Section -->
                 <div class="col-lg-4 col-md-6">
                     <div class="footer-brand mb-3">
                         <div class="d-flex align-items-center mb-3">
-                            <div class="brand-logo me-2">
-                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M16 4L4 14V28H12V20H20V28H28V14L16 4Z" fill="url(#footerLogoGradient)" />
-                                    <defs>
-                                        <linearGradient id="footerLogoGradient" x1="4" y1="4" x2="28" y2="28"
-                                            gradientUnits="userSpaceOnUse">
-                                            <stop stop-color="#ec4899" />
-                                            <stop offset="1" stop-color="#8b5cf6" />
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
-                            </div>
-                            <h5 class="mb-0 fw-bold">HousePredict AI</h5>
+                            <h5 class="mb-0 fw-bold" style="font-family: 'Outfit'; font-size: 1.6rem; color: var(--brand-forest);">Smart Property</h5>
+                            <i class="fas fa-leaf ms-2" style="color: var(--brand-sage);"></i>
                         </div>
                         <p class="footer-text">
-                            AI-powered real estate valuation platform. Make smarter property decisions with machine
-                            learning.
+                            AI-powered real estate valuation platform. Make smarter property decisions with machine learning.
                         </p>
                     </div>
                 </div>
-
-                <!-- Quick Links -->
                 <div class="col-lg-2 col-md-6">
                     <h6 class="footer-heading mb-3">Quick Links</h6>
                     <ul class="footer-links list-unstyled">
                         <li><a href="/">Home</a></li>
                         <li><a href="/predict">Predict Price</a></li>
+                        <li><a href="/dashboard">Dashboard</a></li>
                         <li><a href="/analytics">Analytics</a></li>
-                        <li><a href="/about">About Us</a></li>
                     </ul>
                 </div>
-
-                <!-- Resources -->
                 <div class="col-lg-2 col-md-6">
                     <h6 class="footer-heading mb-3">Resources</h6>
                     <ul class="footer-links list-unstyled">
-                        <li><a href="/#features">Features</a></li>
-                        <li><a href="/#stats">Statistics</a></li>
-                        <li><a href="/analytics">Data Insights</a></li>
                         <li><a href="/about">Technology</a></li>
+                        <li><a href="/analytics">Market Trends</a></li>
+                        <li><a href="https://github.com/Ankit2006Raj" target="_blank">Open Source</a></li>
                     </ul>
                 </div>
-
-                <!-- Contact & Social -->
                 <div class="col-lg-4 col-md-6">
                     <h6 class="footer-heading mb-3">Connect With Us</h6>
                     <div class="footer-contact mb-3">
-                        <a href="mailto:ankit9905163014@gmail.com" class="contact-item">
-                            <i class="fas fa-envelope"></i>
+                        <a href="mailto:ankit9905163014@gmail.com" class="contact-item text-decoration-none" style="color: var(--text-normal);">
+                            <i class="fas fa-envelope me-2" style="color: var(--brand-sage);"></i>
                             <span>ankit9905163014@gmail.com</span>
                         </a>
                     </div>
-                    <div class="social-links">
-                        <a href="https://github.com/Ankit2006Raj" target="_blank" rel="noopener noreferrer"
-                            class="social-link" title="GitHub">
-                            <i class="fab fa-github"></i>
+                    <div class="social-links mt-3">
+                        <a href="https://github.com/Ankit2006Raj" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
+                            <i class="fab fa-github text-white"></i>
                         </a>
-                        <a href="https://www.linkedin.com/in/ankit-raj-226a36309" target="_blank"
-                            rel="noopener noreferrer" class="social-link" title="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
+                        <a href="https://www.linkedin.com/in/ankit-raj-226a36309" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin-in text-white"></i>
                         </a>
                         <a href="mailto:ankit9905163014@gmail.com" class="social-link" title="Email">
-                            <i class="fas fa-envelope"></i>
+                            <i class="fas fa-envelope text-white"></i>
                         </a>
                     </div>
                 </div>
             </div>
-
-            <!-- Footer Bottom -->
-            <div class="footer-bottom mt-4 pt-4">
+            <div class="footer-bottom mt-4 pt-4 border-top" style="border-color: var(--brand-pale-sage) !important;">
                 <div class="row align-items-center">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        <p class="mb-0 footer-copyright">
-                            &copy; 2024 HousePredict AI. All rights reserved.
+                        <p class="mb-0 footer-copyright" style="font-size: 0.9rem; color: var(--text-dim);">
+                            &copy; 2026 Smart Property. All rights reserved.
                         </p>
                     </div>
                     <div class="col-md-6 text-center text-md-end">
-                        <p class="mb-0 footer-credit">
-                            Built with <i class="fas fa-heart text-danger"></i> by <a
-                                href="https://github.com/Ankit2006Raj" target="_blank" class="creator-link">Ankit
-                                Raj</a>
+                        <p class="mb-0 footer-credit" style="font-size: 0.9rem; color: var(--text-dim);">
+                            Built with <i class="fas fa-heart text-danger"></i> by <a href="https://github.com/Ankit2006Raj" target="_blank" class="creator-link text-decoration-none" style="color: var(--brand-forest); font-weight: 700;">Ankit Raj</a>
                         </p>
                     </div>
                 </div>

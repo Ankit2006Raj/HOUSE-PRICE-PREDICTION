@@ -522,7 +522,8 @@
     backdrop-filter: blur(10px);
 }
 
-/ * Market Trends Cards */ .trend-card {
+/* Market Trends Cards */
+.trend-card {
     background: var(--input-bg);
     border-radius: 16px;
     padding: 1.5rem;

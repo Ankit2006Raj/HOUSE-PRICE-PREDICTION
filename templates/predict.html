@@ -4,34 +4,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predict Price - HousePredict AI</title>
+    <title>Predict Price - Smart Property</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/colors.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    
+    <style>
+        .modern-prediction-section {
+            padding-top: 140px;
+            padding-bottom: 100px;
+            background-color: var(--bg-space);
+        }
+        
+        .progress-steps::before {
+            background: var(--brand-pale-sage) !important;
+        }
+        
+        .progress-steps .step-number {
+            border: 3px solid var(--brand-pale-sage) !important;
+            background: var(--bg-deep) !important;
+            color: var(--text-dim) !important;
+        }
+        
+        .progress-steps .step.active .step-number {
+            background: var(--brand-forest) !important;
+            border-color: transparent !important;
+            color: #FFFFFF !important;
+            box-shadow: var(--shadow-pink) !important;
+        }
+        
+        .progress-steps .step.active .step-label {
+            color: var(--brand-forest) !important;
+        }
+        
+        .modern-form {
+            background: #FFFFFF !important;
+            border: 1px solid var(--brand-pale-sage) !important;
+            border-radius: 24px !important;
+            box-shadow: var(--shadow-blue) !important;
+            padding: 2.5rem !important;
+        }
+        
+        html[data-theme="dark"] .modern-form {
+            background: var(--bg-card) !important;
+        }
+        
+        .step-title {
+            color: var(--text-bright) !important;
+            font-size: 1.4rem !important;
+            border-bottom: 2px solid var(--brand-pale-sage);
+            padding-bottom: 0.75rem;
+            text-shadow: none !important;
+        }
+        
+        .step-title i {
+            color: var(--brand-sage) !important;
+        }
+        
+        .btn-navigation {
+            padding: 12px 28px !important;
+            border-radius: 50px !important;
+            font-weight: 700 !important;
+        }
+        
+        .btn-predict-action {
+            background-color: var(--brand-forest) !important;
+            color: #FFFFFF !important;
+            border: none !important;
+            padding: 12px 28px !important;
+            border-radius: 50px !important;
+            font-weight: 700 !important;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-predict-action:hover {
+            background-color: var(--brand-sage) !important;
+            transform: translateY(-2px);
+        }
+    </style>
 </head>
 
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="/">
-                <div class="brand-logo me-2">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16 4L4 14V28H12V20H20V28H28V14L16 4Z" fill="url(#logoGradient)" />
-                        <defs>
-                            <linearGradient id="logoGradient" x1="4" y1="4" x2="28" y2="28"
-                                gradientUnits="userSpaceOnUse">
-                                <stop stop-color="#ec4899" />
-                                <stop offset="1" stop-color="#8b5cf6" />
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                </div>
-                <span>HousePredict AI</span>
+                <span style="font-family: 'Outfit'; font-weight: 900; color: var(--brand-forest);">Smart Property</span>
+                <i class="fas fa-leaf ms-2" style="color: var(--brand-sage); font-size: 1.2rem;"></i>
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+                <i class="fas fa-bars" style="color: var(--brand-forest); font-size: 1.5rem;"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
@@ -66,12 +136,12 @@
         <div class="container">
             <div class="row">
                 <!-- Left Side - Form -->
-                <div class="col-lg-7">
+                <div class="col-lg-7 animate-fade-in">
                     <div class="prediction-header mb-4">
-                        <h1 class="display-5 fw-bold mb-2">
-                            <i class="fas fa-calculator me-3"></i>House Price Predictor
+                        <h1 class="display-6 fw-bold mb-2" style="color: var(--text-bright); font-family: 'Outfit';">
+                            <i class="fas fa-calculator me-2" style="color: var(--brand-sage);"></i>House Price Predictor
                         </h1>
-                        <p class="lead">Enter property details for instant AI-powered valuation</p>
+                        <p class="lead text-muted" style="text-shadow: none !important;">Enter property details for instant AI-powered eco valuation</p>
                     </div>
 
                     <!-- Progress Steps -->
@@ -121,7 +191,7 @@
                                     <div class="modern-input-group">
                                         <label><i class="fas fa-bed"></i> Bedrooms</label>
                                         <select id="bedrooms" name="bedrooms" class="modern-select" required>
-                                            <option value="">Select</option>
+                                            <option value="" disabled selected>Select</option>
                                             <option value="1">1 Bedroom</option>
                                             <option value="2">2 Bedrooms</option>
                                             <option value="3">3 Bedrooms</option>
@@ -136,7 +206,7 @@
                                     <div class="modern-input-group">
                                         <label><i class="fas fa-bath"></i> Bathrooms</label>
                                         <select id="bathrooms" name="bathrooms" class="modern-select" required>
-                                            <option value="">Select</option>
+                                            <option value="" disabled selected>Select</option>
                                             <option value="1">1 Bathroom</option>
                                             <option value="2">2 Bathrooms</option>
                                             <option value="3">3 Bathrooms</option>
@@ -149,7 +219,7 @@
                                     <div class="modern-input-group">
                                         <label><i class="fas fa-building"></i> Floors</label>
                                         <select id="floors" name="floors" class="modern-select" required>
-                                            <option value="">Select</option>
+                                            <option value="" disabled selected>Select</option>
                                             <option value="1">1 Floor</option>
                                             <option value="2">2 Floors</option>
                                             <option value="3">3 Floors</option>
@@ -158,7 +228,7 @@
                                 </div>
                             </div>
 
-                            <button type="button" class="btn btn-primary btn-lg w-100 mt-4" onclick="nextStep(2)">
+                            <button type="button" class="btn btn-primary btn-navigation w-100 mt-4" onclick="nextStep(2)">
                                 Continue <i class="fas fa-arrow-right ms-2"></i>
                             </button>
                         </div>
@@ -174,7 +244,7 @@
                                     <div class="modern-input-group">
                                         <label><i class="fas fa-location-dot"></i> Location</label>
                                         <select id="location" name="location" class="modern-select" required>
-                                            <option value="">Select Location</option>
+                                            <option value="" disabled selected>Select Location</option>
                                             <option value="0">Downtown</option>
                                             <option value="1">Rural</option>
                                             <option value="2">Suburban</option>
@@ -187,7 +257,7 @@
                                     <div class="modern-input-group">
                                         <label><i class="fas fa-star"></i> Condition</label>
                                         <select id="condition" name="condition" class="modern-select" required>
-                                            <option value="">Select Condition</option>
+                                            <option value="" disabled selected>Select Condition</option>
                                             <option value="0">Excellent</option>
                                             <option value="2">Good</option>
                                             <option value="1">Fair</option>
@@ -198,7 +268,7 @@
 
                                 <div class="col-12">
                                     <div class="modern-input-group">
-                                        <label><i class="fas fa-car"></i> Garage</label>
+                                        <label><i class="fas fa-car"></i> Garage Included</label>
                                         <div class="toggle-group">
                                             <input type="radio" id="garageYes" name="garage" value="1" required>
                                             <label for="garageYes" class="toggle-option">
@@ -214,11 +284,11 @@
                             </div>
 
                             <div class="d-flex gap-3 mt-4">
-                                <button type="button" class="btn btn-outline-light btn-lg flex-fill"
+                                <button type="button" class="btn btn-outline-light btn-navigation flex-fill"
                                     onclick="prevStep(1)">
                                     <i class="fas fa-arrow-left me-2"></i> Back
                                 </button>
-                                <button type="submit" class="btn btn-primary btn-lg flex-fill">
+                                <button type="submit" class="btn-predict-action flex-fill">
                                     <i class="fas fa-magic me-2"></i> Predict Price
                                 </button>
                             </div>
@@ -230,17 +300,17 @@
                         <div class="loading-animation">
                             <div class="spinner"></div>
                             <h4>Analyzing Property...</h4>
-                            <p>Our AI is calculating the perfect price</p>
+                            <p>Our AI model is calculating the eco-friendly market value...</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Right Side - Preview & Result -->
-                <div class="col-lg-5">
+                <div class="col-lg-5 col-md-12 mt-5 mt-lg-0 animate-fade-in-delay">
                     <!-- Property Preview Card -->
                     <div id="propertyPreview" class="property-preview-card">
                         <h5 class="mb-3">
-                            <i class="fas fa-eye me-2"></i>Property Preview
+                            <i class="fas fa-eye me-2" style="color: var(--brand-sage);"></i>Property Preview
                         </h5>
                         <div class="preview-content">
                             <div class="preview-item">
@@ -282,17 +352,17 @@
                     <div id="resultCard" class="result-card-modern" style="display: none;">
                         <div class="result-header">
                             <i class="fas fa-check-circle"></i>
-                            <h4>Prediction Complete!</h4>
+                            <h4>Valuation Complete!</h4>
                         </div>
                         <div class="result-body">
                             <div class="predicted-price-modern" id="predictedPrice">$0</div>
                             <p class="result-subtitle">Estimated Market Value</p>
 
-                            <div class="result-actions">
-                                <button class="btn btn-outline-light" onclick="location.reload()">
+                            <div class="result-actions flex-column gap-2">
+                                <button class="btn btn-primary w-100" onclick="location.reload()">
                                     <i class="fas fa-redo me-2"></i>New Prediction
                                 </button>
-                                <a href="/dashboard" class="btn btn-primary">
+                                <a href="/dashboard" class="btn btn-outline-light w-100 mt-2">
                                     <i class="fas fa-chart-line me-2"></i>View Dashboard
                                 </a>
                             </div>
@@ -316,24 +386,11 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="footer-brand mb-3">
                         <div class="d-flex align-items-center mb-3">
-                            <div class="brand-logo me-2">
-                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M16 4L4 14V28H12V20H20V28H28V14L16 4Z" fill="url(#footerLogoGradient)" />
-                                    <defs>
-                                        <linearGradient id="footerLogoGradient" x1="4" y1="4" x2="28" y2="28"
-                                            gradientUnits="userSpaceOnUse">
-                                            <stop stop-color="#ec4899" />
-                                            <stop offset="1" stop-color="#8b5cf6" />
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
-                            </div>
-                            <h5 class="mb-0 fw-bold">HousePredict AI</h5>
+                            <h5 class="mb-0 fw-bold" style="font-family: 'Outfit'; font-size: 1.6rem; color: var(--brand-forest);">Smart Property</h5>
+                            <i class="fas fa-leaf ms-2" style="color: var(--brand-sage);"></i>
                         </div>
                         <p class="footer-text">
-                            AI-powered real estate valuation platform. Make smarter property decisions with machine
-                            learning.
+                            AI-powered real estate valuation platform. Make smarter property decisions with machine learning.
                         </p>
                     </div>
                 </div>
@@ -344,53 +401,47 @@
                         <li><a href="/predict">Predict Price</a></li>
                         <li><a href="/dashboard">Dashboard</a></li>
                         <li><a href="/analytics">Analytics</a></li>
-                        <li><a href="/about">About Us</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-6">
                     <h6 class="footer-heading mb-3">Resources</h6>
                     <ul class="footer-links list-unstyled">
-                        <li><a href="/#features">Features</a></li>
-                        <li><a href="/#stats">Statistics</a></li>
-                        <li><a href="/analytics">Data Insights</a></li>
                         <li><a href="/about">Technology</a></li>
+                        <li><a href="/analytics">Market Trends</a></li>
+                        <li><a href="https://github.com/Ankit2006Raj" target="_blank">Open Source</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <h6 class="footer-heading mb-3">Connect With Us</h6>
                     <div class="footer-contact mb-3">
-                        <a href="mailto:ankit9905163014@gmail.com" class="contact-item">
-                            <i class="fas fa-envelope"></i>
+                        <a href="mailto:ankit9905163014@gmail.com" class="contact-item text-decoration-none" style="color: var(--text-normal);">
+                            <i class="fas fa-envelope me-2" style="color: var(--brand-sage);"></i>
                             <span>ankit9905163014@gmail.com</span>
                         </a>
                     </div>
-                    <div class="social-links">
-                        <a href="https://github.com/Ankit2006Raj" target="_blank" rel="noopener noreferrer"
-                            class="social-link" title="GitHub">
-                            <i class="fab fa-github"></i>
+                    <div class="social-links mt-3">
+                        <a href="https://github.com/Ankit2006Raj" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
+                            <i class="fab fa-github text-white"></i>
                         </a>
-                        <a href="https://www.linkedin.com/in/ankit-raj-226a36309" target="_blank"
-                            rel="noopener noreferrer" class="social-link" title="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
+                        <a href="https://www.linkedin.com/in/ankit-raj-226a36309" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin-in text-white"></i>
                         </a>
                         <a href="mailto:ankit9905163014@gmail.com" class="social-link" title="Email">
-                            <i class="fas fa-envelope"></i>
+                            <i class="fas fa-envelope text-white"></i>
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="footer-bottom mt-4 pt-4">
+            <div class="footer-bottom mt-4 pt-4 border-top" style="border-color: var(--brand-pale-sage) !important;">
                 <div class="row align-items-center">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        <p class="mb-0 footer-copyright">
-                            &copy; 2024 HousePredict AI. All rights reserved.
+                        <p class="mb-0 footer-copyright" style="font-size: 0.9rem; color: var(--text-dim);">
+                            &copy; 2026 Smart Property. All rights reserved.
                         </p>
                     </div>
                     <div class="col-md-6 text-center text-md-end">
-                        <p class="mb-0 footer-credit">
-                            Built with <i class="fas fa-heart text-danger"></i> by <a
-                                href="https://github.com/Ankit2006Raj" target="_blank" class="creator-link">Ankit
-                                Raj</a>
+                        <p class="mb-0 footer-credit" style="font-size: 0.9rem; color: var(--text-dim);">
+                            Built with <i class="fas fa-heart text-danger"></i> by <a href="https://github.com/Ankit2006Raj" target="_blank" class="creator-link text-decoration-none" style="color: var(--brand-forest); font-weight: 700;">Ankit Raj</a>
                         </p>
                     </div>
                 </div>

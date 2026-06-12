@@ -54,6 +54,7 @@ class AnalyticsManager {
         ];
 
         this.currentFilter = 'all';
+        this.analyticsData = null;
         this.init();
     }
 
@@ -165,6 +166,8 @@ class AnalyticsManager {
 
     animateCounter(elementId, target, prefix = '', isPrice = false) {
         const element = document.getElementById(elementId);
+        if (!element) return;
+
         const duration = 2000;
         const steps = 60;
         const increment = target / steps;
@@ -197,25 +200,37 @@ class AnalyticsManager {
 
     setupEventListeners() {
         // Chart filter
-        document.getElementById('chartFilter').addEventListener('change', (e) => {
-            this.currentFilter = e.target.value;
-            this.renderCharts();
-        });
+        const chartFilter = document.getElementById('chartFilter');
+        if (chartFilter) {
+            chartFilter.addEventListener('change', (e) => {
+                this.currentFilter = e.target.value;
+                this.renderCharts();
+            });
+        }
 
         // Time range filter
-        document.getElementById('timeRange').addEventListener('change', (e) => {
-            this.showNotification('Time range filter applied', 'info');
-        });
+        const timeRange = document.getElementById('timeRange');
+        if (timeRange) {
+            timeRange.addEventListener('change', (e) => {
+                this.showNotification('Time range filter applied', 'info');
+            });
+        }
 
         // Refresh data
-        document.getElementById('refreshData').addEventListener('click', () => {
-            this.refreshData();
-        });
+        const refreshData = document.getElementById('refreshData');
+        if (refreshData) {
+            refreshData.addEventListener('click', () => {
+                this.refreshData();
+            });
+        }
 
         // Download report
-        document.getElementById('downloadReport').addEventListener('click', () => {
-            this.downloadReport();
-        });
+        const downloadReport = document.getElementById('downloadReport');
+        if (downloadReport) {
+            downloadReport.addEventListener('click', () => {
+                this.downloadReport();
+            });
+        }
     }
 
     refreshData() {
@@ -300,6 +315,50 @@ class AnalyticsManager {
             setTimeout(() => notification.remove(), 300);
         }, 3000);
     }
+
+    exportCSV() {
+        this.showNotification('Preparing CSV export...', 'info');
+
+        // Simulate CSV generation
+        setTimeout(() => {
+            const csvContent = this.generateCSVContent();
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `analytics_report_${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+            window.URL.revokeObjectURL(url);
+            this.showNotification('CSV exported successfully!', 'success');
+        }, 1000);
+    }
+
+    exportPDF() {
+        this.showNotification('Generating PDF report...', 'info');
+
+        // Simulate PDF generation
+        setTimeout(() => {
+            this.showNotification('PDF report generated! (Demo mode)', 'success');
+            // In production, this would trigger actual PDF generation
+        }, 2000);
+    }
+
+    generateCSVContent() {
+        if (!this.analyticsData) {
+            return 'Metric,Value\nTotal Properties,5000\nAverage Price,425000\nMedian Price,385000\nAverage Area,2150';
+        }
+
+        let csv = 'Metric,Value\n';
+        csv += `Total Properties,${this.analyticsData.totalProperties}\n`;
+        csv += `Average Price,${this.analyticsData.avgPrice.toFixed(2)}\n`;
+        csv += `Median Price,${this.analyticsData.medianPrice.toFixed(2)}\n`;
+        csv += `Average Area,${this.analyticsData.avgArea.toFixed(2)}\n`;
+        csv += `Min Price,${this.analyticsData.minPrice.toFixed(2)}\n`;
+        csv += `Max Price,${this.analyticsData.maxPrice.toFixed(2)}\n`;
+        csv += `Price Std Dev,${this.analyticsData.priceStd.toFixed(2)}\n`;
+
+        return csv;
+    }
 }
 
 // Initialize analytics manager
@@ -307,48 +366,3 @@ let analyticsManager;
 document.addEventListener('DOMContentLoaded', () => {
     analyticsManager = new AnalyticsManager();
 });
-
-exportCSV() {
-    this.showNotification('Preparing CSV export...', 'info');
-
-    // Simulate CSV generation
-    setTimeout(() => {
-        const csvContent = this.generateCSVContent();
-        const blob = new Blob([csvContent], { type: 'text/csv' });
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `analytics_report_${new Date().toISOString().split('T')[0]}.csv`;
-        link.click();
-        window.URL.revokeObjectURL(url);
-        this.showNotification('CSV exported successfully!', 'success');
-    }, 1000);
-}
-
-exportPDF() {
-    this.showNotification('Generating PDF report...', 'info');
-
-    // Simulate PDF generation
-    setTimeout(() => {
-        this.showNotification('PDF report generated! (Demo mode)', 'success');
-        // In production, this would trigger actual PDF generation
-    }, 2000);
-}
-
-generateCSVContent() {
-    if (!this.analyticsData) {
-        return 'Metric,Value\nTotal Properties,5000\nAverage Price,425000\nMedian Price,385000\nAverage Area,2150';
-    }
-
-    let csv = 'Metric,Value\n';
-    csv += `Total Properties,${this.analyticsData.totalProperties}\n`;
-    csv += `Average Price,${this.analyticsData.avgPrice.toFixed(2)}\n`;
-    csv += `Median Price,${this.analyticsData.medianPrice.toFixed(2)}\n`;
-    csv += `Average Area,${this.analyticsData.avgArea.toFixed(2)}\n`;
-    csv += `Min Price,${this.analyticsData.minPrice.toFixed(2)}\n`;
-    csv += `Max Price,${this.analyticsData.maxPrice.toFixed(2)}\n`;
-    csv += `Price Std Dev,${this.analyticsData.priceStd.toFixed(2)}\n`;
-
-    return csv;
-}
-}

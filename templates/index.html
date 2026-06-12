@@ -4,34 +4,377 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HousePredict AI - Smart Real Estate Valuation</title>
+    <title>Smart Property - Smart Eco-Friendly Real Estate Valuation</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/colors.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    
+    <style>
+        /* Specific page styling to match reference image layout */
+        .hero-section {
+            padding-top: 140px;
+            padding-bottom: 110px;
+            background-color: var(--bg-space);
+        }
+        
+        .hero-image-container {
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(44, 76, 48, 0.08);
+            position: relative;
+            height: 480px;
+        }
+        
+        .hero-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Green badge above hero title */
+        .badge-green-homes {
+            background-color: var(--brand-pale-sage);
+            color: var(--brand-forest);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 10px rgba(94, 130, 86, 0.05);
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.15;
+            color: var(--text-bright);
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-normal);
+            margin-bottom: 35px;
+            max-width: 500px;
+            line-height: 1.7;
+        }
+        
+        /* Floating Search/Predict Bar */
+        .search-bar-floating-container {
+            position: relative;
+            margin-top: -60px;
+            z-index: 100;
+            padding: 0 15px;
+        }
+        
+        .search-bar-floating {
+            background: var(--brand-pale-sage);
+            border-radius: 100px;
+            padding: 16px 24px;
+            box-shadow: 0 20px 40px rgba(44, 76, 48, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .search-item {
+            flex: 1;
+            min-width: 150px;
+            position: relative;
+        }
+        
+        .search-item select, 
+        .search-item input {
+            background: #FFFFFF !important;
+            border: 1px solid transparent !important;
+            border-radius: 50px !important;
+            padding: 14px 24px !important;
+            font-weight: 600 !important;
+            color: var(--text-bright) !important;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02) !important;
+        }
+        
+        .search-item select:focus, 
+        .search-item input:focus {
+            border-color: var(--brand-sage) !important;
+            box-shadow: 0 4px 15px rgba(94, 130, 86, 0.1) !important;
+        }
+        
+        .btn-predict-search {
+            background: var(--brand-forest);
+            color: #FFFFFF;
+            border: none;
+            border-radius: 50px;
+            padding: 14px 32px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(44, 76, 48, 0.15);
+        }
+        
+        .btn-predict-search:hover {
+            background: var(--brand-sage);
+            color: #FFFFFF;
+            transform: translateY(-2px);
+        }
+        
+        /* Welcome Section */
+        .welcome-section {
+            padding: 120px 0 80px;
+            background-color: var(--bg-space);
+        }
+        
+        .welcome-image-wrapper {
+            position: relative;
+            padding: 15px;
+        }
+        
+        .welcome-image {
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(44, 76, 48, 0.08);
+            width: 90%;
+        }
+        
+        .welcome-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .badge-eco-certified {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            background: var(--brand-forest);
+            color: #FFFFFF;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 20px rgba(44, 76, 48, 0.2);
+            animation: orbPulse 6s ease-in-out infinite;
+        }
+        
+        .badge-eco-certified i {
+            font-size: 1.4rem;
+        }
+        
+        .badge-eco-certified span {
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+        
+        .badge-leaf-decoration {
+            position: absolute;
+            bottom: -10px;
+            right: 20px;
+            background: #FFFFFF;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            font-size: 1.4rem;
+            color: #A3855E;
+        }
+        
+        .welcome-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-bright);
+            margin-bottom: 24px;
+        }
+        
+        .welcome-text {
+            color: var(--text-normal);
+            line-height: 1.8;
+            margin-bottom: 35px;
+        }
+        
+        /* Properties Grid Section */
+        .properties-section {
+            padding: 80px 0 100px;
+            background-color: var(--bg-space);
+        }
+        
+        .section-header-green {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-bright);
+            margin-bottom: 12px;
+        }
+        
+        .property-grid-card {
+            background: #FFFFFF;
+            border: 1px solid var(--brand-pale-sage);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-blue);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        html[data-theme="dark"] .property-grid-card {
+            background: var(--bg-card);
+        }
+        
+        .property-grid-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(44, 76, 48, 0.08);
+            border-color: var(--brand-medium-sage);
+        }
+        
+        .property-card-img {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .property-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .property-grid-card:hover .property-card-img img {
+            transform: scale(1.05);
+        }
+        
+        .property-card-tag {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--brand-forest);
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .property-card-body {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .property-card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 12px;
+        }
+        
+        .property-card-desc {
+            color: var(--text-normal);
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .btn-card-action {
+            background-color: var(--brand-sage);
+            color: #FFFFFF;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 24px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            width: fit-content;
+            transition: all 0.2s ease;
+        }
+        
+        .property-grid-card:hover .btn-card-action {
+            background-color: var(--brand-forest);
+        }
+        
+        /* Pagination Dots */
+        .pagination-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 40px;
+        }
+        
+        .pagination-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--brand-pale-sage);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .pagination-dot.active {
+            background-color: var(--brand-forest);
+            transform: scale(1.3);
+            width: 18px;
+            border-radius: 10px;
+        }
+        
+        /* Responsive Overrides */
+        @media (max-width: 992px) {
+            .hero-section {
+                padding-top: 100px;
+                padding-bottom: 80px;
+                text-align: center;
+            }
+            .hero-subtitle {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-image-container {
+                margin-top: 40px;
+                height: 380px;
+            }
+            .search-bar-floating {
+                border-radius: 24px;
+                padding: 16px;
+            }
+            .welcome-image {
+                width: 100%;
+                margin-bottom: 40px;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <!-- Modern Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="/">
-                <div class="brand-logo me-2">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16 4L4 14V28H12V20H20V28H28V14L16 4Z" fill="url(#logoGradient)" />
-                        <defs>
-                            <linearGradient id="logoGradient" x1="4" y1="4" x2="28" y2="28"
-                                gradientUnits="userSpaceOnUse">
-                                <stop stop-color="#ec4899" />
-                                <stop offset="1" stop-color="#8b5cf6" />
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                </div>
-                <span>HousePredict AI</span>
+                <span style="font-family: 'Outfit'; font-weight: 900; color: var(--brand-forest);">Smart Property</span>
+                <i class="fas fa-leaf ms-2" style="color: var(--brand-sage); font-size: 1.2rem;"></i>
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+                <i class="fas fa-bars" style="color: var(--brand-forest); font-size: 1.5rem;"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
@@ -39,7 +382,7 @@
                         <a class="nav-link active" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/predict">Predict</a>
+                        <a class="nav-link" href="/predict">Predict Price</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/dashboard">Dashboard</a>
@@ -56,6 +399,11 @@
                             <i class="fas fa-moon moon-icon"></i>
                         </button>
                     </li>
+                    <li class="nav-item ms-3">
+                        <a href="/predict" class="btn btn-primary">
+                            <i class="fas fa-calculator me-2"></i>Estimate
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -65,199 +413,167 @@
     <section class="hero-section">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-6 hero-content">
-                    <div class="badge bg-gradient mb-3 px-3 py-2"
-                        style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(236, 72, 153, 0.2)); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 50px;">
-                        <i class="fas fa-sparkles me-2"></i>AI-Powered Predictions
+                <div class="col-lg-6 hero-content text-start">
+                    <div class="badge-green-homes">
+                        <i class="fas fa-leaf"></i>
+                        <span>Green Homes</span>
                     </div>
-                    <h1 class="display-3 fw-bold mb-4">
-                        Predict House Prices<br>with <span class="text-gradient">AI Precision</span>
+                    <h1 class="hero-title">
+                        Find Eco-Friendly<br>Homes Easily
                     </h1>
-                    <p class="lead mb-5">
-                        Leverage cutting-edge machine learning to get instant, accurate real estate valuations.
-                        Make smarter property decisions with data-driven insights.
+                    <p class="hero-subtitle">
+                        Leverage our state-of-the-art machine learning algorithms to estimate real estate valuation with high precision. Discover sustainable living built for the future.
                     </p>
-                    <div class="d-flex flex-wrap gap-3 mb-5">
+                    <div class="d-flex flex-wrap gap-3">
                         <a href="/predict" class="btn btn-primary btn-lg">
-                            <i class="fas fa-rocket me-2"></i>Start Predicting
+                            <i class="fas fa-search me-2"></i>Search Now
                         </a>
                         <a href="/analytics" class="btn btn-outline-light btn-lg">
-                            <i class="fas fa-chart-line me-2"></i>View Analytics
+                            <i class="fas fa-chart-line me-2"></i>View Stats
                         </a>
                     </div>
-                    <div class="d-flex gap-4 flex-wrap">
-                        <div class="text-center">
-                            <h3 class="fw-bold mb-0">2000+</h3>
-                            <small style="color: var(--text-secondary);">Properties</small>
+                </div>
+                <div class="col-lg-6 mt-5 mt-lg-0">
+                    <div class="hero-image-container">
+                        <img src="{{ url_for('static', filename='images/hero_eco_house.png') }}" alt="Modern Forest Villa">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating Search Bar -->
+    <div class="search-bar-floating-container">
+        <div class="container">
+            <form action="/predict" method="GET" class="search-bar-floating">
+                <!-- Area Input -->
+                <div class="search-item">
+                    <input type="number" name="area" placeholder="Area (sq ft)" min="500" max="5000" required>
+                </div>
+                <!-- Location Selection -->
+                <div class="search-item">
+                    <select name="location" required>
+                        <option value="" disabled selected>Select Location</option>
+                        <option value="0">Downtown</option>
+                        <option value="1">Rural</option>
+                        <option value="2">Suburban</option>
+                        <option value="3">Urban</option>
+                    </select>
+                </div>
+                <!-- Condition Selection -->
+                <div class="search-item">
+                    <select name="condition" required>
+                        <option value="" disabled selected>Select Condition</option>
+                        <option value="0">Excellent</option>
+                        <option value="2">Good</option>
+                        <option value="1">Fair</option>
+                        <option value="3">Poor</option>
+                    </select>
+                </div>
+                <!-- Predict Button -->
+                <button type="submit" class="btn-predict-search">
+                    <i class="fas fa-magic me-2"></i>Predict Price
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Welcome Section -->
+    <section class="welcome-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="welcome-image-wrapper">
+                        <div class="badge-eco-certified">
+                            <i class="fas fa-award"></i>
+                            <span>Eco Certified</span>
                         </div>
-                        <div class="text-center">
-                            <h3 class="fw-bold mb-0">92%</h3>
-                            <small style="color: var(--text-secondary);">Accuracy</small>
+                        <div class="welcome-image">
+                            <img src="{{ url_for('static', filename='images/welcome_eco_house.png') }}" alt="Eco Friendly Living">
                         </div>
-                        <div class="text-center">
-                            <h3 class="fw-bold mb-0">&lt;2s</h3>
-                            <small style="color: var(--text-secondary);">Response</small>
+                        <div class="badge-leaf-decoration">
+                            <i class="fas fa-seedling"></i>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 mt-5 mt-lg-0">
-                    <div class="hero-image">
-                        <svg class="hero-house-svg" viewBox="0 0 400 400" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <!-- House Shape -->
-                            <g class="house-main">
-                                <!-- Roof -->
-                                <path d="M200 80L80 180V360H320V180L200 80Z" fill="url(#houseGradient)"
-                                    class="house-body" />
-                                <!-- Door -->
-                                <rect x="160" y="260" width="80" height="100" rx="8" fill="url(#doorGradient)"
-                                    class="house-door" />
-                                <!-- Windows -->
-                                <rect x="100" y="220" width="50" height="50" rx="6" fill="url(#windowGradient)"
-                                    class="house-window" />
-                                <rect x="250" y="220" width="50" height="50" rx="6" fill="url(#windowGradient)"
-                                    class="house-window" />
-                            </g>
-
-                            <!-- Gradients -->
-                            <defs>
-                                <linearGradient id="houseGradient" x1="80" y1="80" x2="320" y2="360"
-                                    gradientUnits="userSpaceOnUse">
-                                    <stop stop-color="#ec4899" />
-                                    <stop offset="0.5" stop-color="#f472b6" />
-                                    <stop offset="1" stop-color="#f87171" />
-                                </linearGradient>
-                                <linearGradient id="doorGradient" x1="160" y1="260" x2="240" y2="360"
-                                    gradientUnits="userSpaceOnUse">
-                                    <stop stop-color="#7c3aed" />
-                                    <stop offset="1" stop-color="#5b21b6" />
-                                </linearGradient>
-                                <linearGradient id="windowGradient" x1="100" y1="220" x2="150" y2="270"
-                                    gradientUnits="userSpaceOnUse">
-                                    <stop stop-color="#6366f1" stop-opacity="0.8" />
-                                    <stop offset="1" stop-color="#4f46e5" stop-opacity="0.6" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
+                    <h2 class="welcome-title">Welcome to Smart Property</h2>
+                    <p class="welcome-text">
+                        Smart Property is a premier real estate valuation platform designed for modern, eco-conscious property selection. By utilizing robust machine learning models trained on structural and location parameters, we empower home-buyers and developers with transparent pricing insights.
+                        <br><br>
+                        Our predictive intelligence automatically adjusts market weights for materials, insulation status, and energy configurations, ensuring you have the data needed to evaluate carbon-neutral structures accurately.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="/predict" class="btn btn-primary">Try Service</a>
+                        <a href="/about" class="btn btn-outline-light">About Us</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Modern Features Section -->
-    <section class="features-section">
+    <!-- Property Grid Section -->
+    <section class="properties-section">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="display-5 fw-bold mb-3">Why Choose Us?</h2>
-                <p class="lead">Powerful features that set us apart</p>
+                <h2 class="section-header-green">Featured Eco Properties</h2>
+                <p class="lead text-muted">Explore our curated selection of properties built for eco-friendly comfort</p>
             </div>
             <div class="row g-4">
+                <!-- Property 1 -->
                 <div class="col-lg-4 col-md-6">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-brain"></i>
+                    <div class="property-grid-card">
+                        <div class="property-card-img">
+                            <img src="{{ url_for('static', filename='images/property_1.png') }}" alt="A-Frame Eco House">
+                            <span class="property-card-tag">Timber Frame</span>
                         </div>
-                        <h4>AI-Powered Engine</h4>
-                        <p>Advanced ML models trained on 2000+ real estate transactions for maximum accuracy</p>
+                        <div class="property-card-body">
+                            <h4 class="property-card-title">Well Eco-Friendly Homes</h4>
+                            <p class="property-card-desc">
+                                Modern, highly-insulated cabin combining natural wood aesthetics with geothermal floor heating and double-glazed low-E windows.
+                            </p>
+                            <a href="/predict?area=1800&location=2&condition=0" class="btn-card-action">Learn More</a>
+                        </div>
                     </div>
                 </div>
+                <!-- Property 2 -->
                 <div class="col-lg-4 col-md-6">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-bolt"></i>
+                    <div class="property-grid-card">
+                        <div class="property-card-img">
+                            <img src="{{ url_for('static', filename='images/property_2.png') }}" alt="Sustainable Villa">
+                            <span class="property-card-tag">Solar Roof</span>
                         </div>
-                        <h4>Lightning Fast</h4>
-                        <p>Get instant predictions in under 2 seconds with our optimized algorithms</p>
+                        <div class="property-card-body">
+                            <h4 class="property-card-title">Sustainably Living Homes</h4>
+                            <p class="property-card-desc">
+                                Contemporary suburban villa featuring integrated solar shingle arrays, organic vertical garden columns, and recycled rainwater systems.
+                            </p>
+                            <a href="/predict?area=2800&location=2&condition=0" class="btn-card-action">Agent Cards</a>
+                        </div>
                     </div>
                 </div>
+                <!-- Property 3 -->
                 <div class="col-lg-4 col-md-6">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-chart-line"></i>
+                    <div class="property-grid-card">
+                        <div class="property-card-img">
+                            <img src="{{ url_for('static', filename='images/property_3.png') }}" alt="Luxury Forest Cabin">
+                            <span class="property-card-tag">Net Zero</span>
                         </div>
-                        <h4>Deep Analytics</h4>
-                        <p>Comprehensive market insights with interactive data visualizations</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-check"></i>
+                        <div class="property-card-body">
+                            <h4 class="property-card-title">Comfortable Living</h4>
+                            <p class="property-card-desc">
+                                Net-zero wood cabin surrounded by redwood pines. Fully off-grid capable with advanced lithium battery storage and smart-grid automation.
+                            </p>
+                            <a href="/predict?area=1500&location=1&condition=2" class="btn-card-action">Agent Cards</a>
                         </div>
-                        <h4>92% Accuracy</h4>
-                        <p>Industry-leading precision with R² score above 0.85 on test data</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-mobile-screen"></i>
-                        </div>
-                        <h4>Fully Responsive</h4>
-                        <p>Seamless experience across desktop, tablet, and mobile devices</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-wand-magic-sparkles"></i>
-                        </div>
-                        <h4>Easy to Use</h4>
-                        <p>Intuitive interface designed for everyone - no technical skills needed</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Modern Stats Section -->
-    <section class="stats-section">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6">
-                    <div class="stat-item text-center">
-                        <i class="fas fa-database fa-3x mb-3"></i>
-                        <h2 class="fw-bold counter" data-target="2000">0</h2>
-                        <p>Properties Analyzed</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="stat-item text-center">
-                        <i class="fas fa-bullseye fa-3x mb-3"></i>
-                        <h2 class="fw-bold"><span class="counter" data-target="92">0</span>%</h2>
-                        <p>Accuracy Rate</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="stat-item text-center">
-                        <i class="fas fa-gauge-high fa-3x mb-3"></i>
-                        <h2 class="fw-bold">&lt;<span class="counter" data-target="2">0</span>s</h2>
-                        <p>Response Time</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="stat-item text-center">
-                        <i class="fas fa-users fa-3x mb-3"></i>
-                        <h2 class="fw-bold counter" data-target="500">0</h2>
-                        <p>Happy Users</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Modern CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <h2 class="display-4 fw-bold mb-4">Ready to Get Started?</h2>
-                    <p class="lead mb-5">Experience the power of AI-driven real estate valuation</p>
-                    <a href="/predict" class="btn btn-primary btn-lg">
-                        <i class="fas fa-rocket me-2"></i>Start Predicting Now
-                    </a>
-                </div>
+            
+            <div class="pagination-dots">
+                <span class="pagination-dot active"></span>
+                <span class="pagination-dot"></span>
+                <span class="pagination-dot"></span>
             </div>
         </div>
     </section>
@@ -270,24 +586,11 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="footer-brand mb-3">
                         <div class="d-flex align-items-center mb-3">
-                            <div class="brand-logo me-2">
-                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M16 4L4 14V28H12V20H20V28H28V14L16 4Z" fill="url(#footerLogoGradient)" />
-                                    <defs>
-                                        <linearGradient id="footerLogoGradient" x1="4" y1="4" x2="28" y2="28"
-                                            gradientUnits="userSpaceOnUse">
-                                            <stop stop-color="#ec4899" />
-                                            <stop offset="1" stop-color="#8b5cf6" />
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
-                            </div>
-                            <h5 class="mb-0 fw-bold">HousePredict AI</h5>
+                            <h5 class="mb-0 fw-bold" style="font-family: 'Outfit'; font-size: 1.6rem; color: var(--brand-forest);">Smart Property</h5>
+                            <i class="fas fa-leaf ms-2" style="color: var(--brand-sage);"></i>
                         </div>
                         <p class="footer-text">
-                            AI-powered real estate valuation platform. Make smarter property decisions with machine
-                            learning.
+                            AI-powered real estate valuation platform. Make smarter property decisions with machine learning.
                         </p>
                     </div>
                 </div>
@@ -298,8 +601,8 @@
                     <ul class="footer-links list-unstyled">
                         <li><a href="/">Home</a></li>
                         <li><a href="/predict">Predict Price</a></li>
+                        <li><a href="/dashboard">Dashboard</a></li>
                         <li><a href="/analytics">Analytics</a></li>
-                        <li><a href="/about">About Us</a></li>
                     </ul>
                 </div>
 
@@ -307,10 +610,9 @@
                 <div class="col-lg-2 col-md-6">
                     <h6 class="footer-heading mb-3">Resources</h6>
                     <ul class="footer-links list-unstyled">
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="#stats">Statistics</a></li>
-                        <li><a href="/analytics">Data Insights</a></li>
                         <li><a href="/about">Technology</a></li>
+                        <li><a href="/analytics">Market Trends</a></li>
+                        <li><a href="https://github.com/Ankit2006Raj" target="_blank">Open Source</a></li>
                     </ul>
                 </div>
 
@@ -318,40 +620,36 @@
                 <div class="col-lg-4 col-md-6">
                     <h6 class="footer-heading mb-3">Connect With Us</h6>
                     <div class="footer-contact mb-3">
-                        <a href="mailto:ankit9905163014@gmail.com" class="contact-item">
-                            <i class="fas fa-envelope"></i>
+                        <a href="mailto:ankit9905163014@gmail.com" class="contact-item text-decoration-none" style="color: var(--text-normal);">
+                            <i class="fas fa-envelope me-2" style="color: var(--brand-sage);"></i>
                             <span>ankit9905163014@gmail.com</span>
                         </a>
                     </div>
-                    <div class="social-links">
-                        <a href="https://github.com/Ankit2006Raj" target="_blank" rel="noopener noreferrer"
-                            class="social-link" title="GitHub">
-                            <i class="fab fa-github"></i>
+                    <div class="social-links mt-3">
+                        <a href="https://github.com/Ankit2006Raj" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
+                            <i class="fab fa-github text-white"></i>
                         </a>
-                        <a href="https://www.linkedin.com/in/ankit-raj-226a36309" target="_blank"
-                            rel="noopener noreferrer" class="social-link" title="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
+                        <a href="https://www.linkedin.com/in/ankit-raj-226a36309" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin-in text-white"></i>
                         </a>
                         <a href="mailto:ankit9905163014@gmail.com" class="social-link" title="Email">
-                            <i class="fas fa-envelope"></i>
+                            <i class="fas fa-envelope text-white"></i>
                         </a>
                     </div>
                 </div>
             </div>
 
             <!-- Footer Bottom -->
-            <div class="footer-bottom mt-4 pt-4">
+            <div class="footer-bottom mt-4 pt-4 border-top" style="border-color: var(--brand-pale-sage) !important;">
                 <div class="row align-items-center">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        <p class="mb-0 footer-copyright">
-                            &copy; 2024 HousePredict AI. All rights reserved.
+                        <p class="mb-0 footer-copyright" style="font-size: 0.9rem; color: var(--text-dim);">
+                            &copy; 2026 Smart Property. All rights reserved.
                         </p>
                     </div>
                     <div class="col-md-6 text-center text-md-end">
-                        <p class="mb-0 footer-credit">
-                            Built with <i class="fas fa-heart text-danger"></i> by <a
-                                href="https://github.com/Ankit2006Raj" target="_blank" class="creator-link">Ankit
-                                Raj</a>
+                        <p class="mb-0 footer-credit" style="font-size: 0.9rem; color: var(--text-dim);">
+                            Built with <i class="fas fa-heart text-danger"></i> by <a href="https://github.com/Ankit2006Raj" target="_blank" class="creator-link text-decoration-none" style="color: var(--brand-forest); font-weight: 700;">Ankit Raj</a>
                         </p>
                     </div>
                 </div>
@@ -361,7 +659,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 
 </html>

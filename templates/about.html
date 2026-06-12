@@ -4,34 +4,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - HousePredict AI</title>
+    <title>About - Smart Property</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/colors.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    
+    <style>
+        .about-section {
+            padding-top: 140px;
+            padding-bottom: 80px;
+            background-color: var(--bg-space);
+        }
+        
+        .about-card {
+            background: #FFFFFF !important;
+            border: 1px solid var(--brand-pale-sage) !important;
+            border-radius: 20px !important;
+            padding: 2.5rem !important;
+            box-shadow: var(--shadow-blue) !important;
+        }
+        
+        html[data-theme="dark"] .about-card {
+            background: var(--bg-card) !important;
+        }
+        
+        .about-card i {
+            color: var(--brand-sage) !important;
+        }
+        
+        .tech-card {
+            background: #FFFFFF !important;
+            border: 1px solid var(--brand-pale-sage) !important;
+            box-shadow: var(--shadow-blue) !important;
+            padding: 2rem 1.5rem !important;
+            border-radius: 16px !important;
+            text-align: center;
+        }
+        
+        html[data-theme="dark"] .tech-card {
+            background: var(--bg-card) !important;
+        }
+        
+        .tech-card i {
+            color: var(--brand-forest) !important;
+            margin-bottom: 1rem;
+        }
+        
+        .model-card {
+            background: #FFFFFF !important;
+            border: 1px solid var(--brand-gold) !important;
+            box-shadow: var(--shadow-purple) !important;
+            border-radius: 20px !important;
+            padding: 2.5rem !important;
+        }
+        
+        html[data-theme="dark"] .model-card {
+            background: var(--bg-card) !important;
+        }
+        
+        .model-card i {
+            color: var(--brand-sage) !important;
+        }
+        
+        .feature-about-card {
+            background: #FFFFFF !important;
+            border: 1px solid var(--brand-pale-sage) !important;
+            box-shadow: var(--shadow-blue) !important;
+            padding: 2rem !important;
+            border-radius: 16px !important;
+        }
+        
+        html[data-theme="dark"] .feature-about-card {
+            background: var(--bg-card) !important;
+        }
+        
+        .feature-about-card i {
+            color: var(--brand-forest) !important;
+        }
+    </style>
 </head>
 
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="/">
-                <div class="brand-logo me-2">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16 4L4 14V28H12V20H20V28H28V14L16 4Z" fill="url(#logoGradient)" />
-                        <defs>
-                            <linearGradient id="logoGradient" x1="4" y1="4" x2="28" y2="28"
-                                gradientUnits="userSpaceOnUse">
-                                <stop stop-color="#ec4899" />
-                                <stop offset="1" stop-color="#8b5cf6" />
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                </div>
-                <span>HousePredict AI</span>
+                <span style="font-family: 'Outfit'; font-weight: 900; color: var(--brand-forest);">Smart Property</span>
+                <i class="fas fa-leaf ms-2" style="color: var(--brand-sage); font-size: 1.2rem;"></i>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars" style="color: var(--brand-forest); font-size: 1.5rem;"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
@@ -40,6 +110,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/predict">Predict Price</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/analytics">Analytics</a>
@@ -61,86 +134,91 @@
     <!-- About Section -->
     <section class="about-section py-5">
         <div class="container">
-            <div class="text-center mb-5">
-                <h1 class="display-4 fw-bold mb-3">About HousePredict AI</h1>
-                <p class="lead text-muted">Revolutionizing real estate valuation with artificial intelligence</p>
+            <div class="text-center mb-5 animate-fade-in">
+                <h1 class="display-5 fw-bold mb-3" style="font-family: 'Outfit'; color: var(--text-bright);">About Smart Property</h1>
+                <p class="lead text-muted">Revolutionizing real estate valuation with artificial intelligence and green standards</p>
             </div>
 
-            <div class="row mb-5">
+            <div class="row mb-5 animate-fade-in-delay">
                 <div class="col-lg-6 mb-4">
                     <div class="about-card">
-                        <h3><i class="fas fa-bullseye text-primary me-2"></i>Our Mission</h3>
-                        <p>To democratize access to accurate real estate valuations by leveraging cutting-edge machine
-                            learning technology. We believe everyone should have access to data-driven insights when
-                            making one of life's biggest financial decisions.</p>
+                        <h3><i class="fas fa-bullseye me-2"></i>Our Mission</h3>
+                        <p class="mt-3">To democratize access to accurate real estate valuations by leveraging cutting-edge machine learning technology. We believe everyone should have access to transparent, data-driven pricing models when making decisions on eco-friendly and energy-efficient homes.</p>
                     </div>
                 </div>
                 <div class="col-lg-6 mb-4">
                     <div class="about-card">
-                        <h3><i class="fas fa-eye text-primary me-2"></i>Our Vision</h3>
-                        <p>To become the most trusted AI-powered real estate valuation platform globally, helping
-                            millions make informed property decisions with confidence and transparency.</p>
+                        <h3><i class="fas fa-eye me-2"></i>Our Vision</h3>
+                        <p class="mt-3">To become the world's most trusted AI platform for eco-friendly real estate valuation, empowering green builders and homeowners to realize the true premium of sustainable design and material choices.</p>
                     </div>
                 </div>
             </div>
 
             <!-- Technology Stack -->
-            <div class="tech-section mb-5">
-                <h2 class="text-center mb-4">Technology Stack</h2>
+            <div class="tech-section mb-5 animate-fade-in-delay-2">
+                <h2 class="text-center mb-4" style="font-family: 'Outfit';">Technology Stack</h2>
                 <div class="row g-4">
                     <div class="col-md-3 col-sm-6">
                         <div class="tech-card">
-                            <i class="fab fa-python fa-3x text-primary mb-3"></i>
+                            <i class="fab fa-python fa-3x mb-3"></i>
                             <h5>Python</h5>
-                            <p>Core ML Development</p>
+                            <p class="text-muted mb-0">Core ML Development</p>
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6">
                         <div class="tech-card">
-                            <i class="fas fa-flask fa-3x text-success mb-3"></i>
+                            <i class="fas fa-cubes fa-3x mb-3"></i>
                             <h5>Flask</h5>
-                            <p>Web Framework</p>
+                            <p class="text-muted mb-0">Web Micro-Framework</p>
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6">
                         <div class="tech-card">
-                            <i class="fas fa-brain fa-3x text-danger mb-3"></i>
+                            <i class="fas fa-brain fa-3x mb-3"></i>
                             <h5>Scikit-learn</h5>
-                            <p>Machine Learning</p>
+                            <p class="text-muted mb-0">Machine Learning Models</p>
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6">
                         <div class="tech-card">
-                            <i class="fab fa-bootstrap fa-3x text-purple mb-3"></i>
+                            <i class="fab fa-bootstrap fa-3x mb-3"></i>
                             <h5>Bootstrap</h5>
-                            <p>UI Framework</p>
+                            <p class="text-muted mb-0">Responsive UI Design</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- ML Models -->
-            <div class="models-section mb-5">
-                <h2 class="text-center mb-4">Machine Learning Models</h2>
+            <div class="models-section mb-5 animate-fade-in-delay-2">
+                <h2 class="text-center mb-4" style="font-family: 'Outfit';">Machine Learning Models</h2>
                 <div class="row">
                     <div class="col-lg-8 mx-auto">
                         <div class="model-card">
-                            <ul class="list-unstyled">
-                                <li class="mb-3">
-                                    <i class="fas fa-check-circle text-success me-2"></i>
-                                    <strong>Linear Regression:</strong> Baseline model for price prediction
+                            <ul class="list-unstyled mb-0">
+                                <li class="mb-3 d-flex align-items-start">
+                                    <i class="fas fa-check-circle me-3 mt-1"></i>
+                                    <div>
+                                        <strong>Linear Regression:</strong> Baseline pricing model based on basic square footage.
+                                    </div>
                                 </li>
-                                <li class="mb-3">
-                                    <i class="fas fa-check-circle text-success me-2"></i>
-                                    <strong>Ridge & Lasso Regression:</strong> Regularized models to prevent overfitting
+                                <li class="mb-3 d-flex align-items-start">
+                                    <i class="fas fa-check-circle me-3 mt-1"></i>
+                                    <div>
+                                        <strong>Ridge & Lasso Regression:</strong> Regularized regressions to penalize noisy variables.
+                                    </div>
                                 </li>
-                                <li class="mb-3">
-                                    <i class="fas fa-check-circle text-success me-2"></i>
-                                    <strong>Random Forest:</strong> Ensemble method for robust predictions
+                                <li class="mb-3 d-flex align-items-start">
+                                    <i class="fas fa-check-circle me-3 mt-1"></i>
+                                    <div>
+                                        <strong>Random Forest Ensemble:</strong> Non-linear model grouping multi-level decisions for location factors.
+                                    </div>
                                 </li>
-                                <li class="mb-3">
-                                    <i class="fas fa-check-circle text-success me-2"></i>
-                                    <strong>Gradient Boosting:</strong> Advanced boosting algorithm for high accuracy
+                                <li class="d-flex align-items-start">
+                                    <i class="fas fa-check-circle me-3 mt-1"></i>
+                                    <div>
+                                        <strong>Gradient Boosting:</strong> Advanced boosting algorithm providing high-precision fitting for final predictions.
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -149,43 +227,43 @@
             </div>
 
             <!-- Features -->
-            <div class="features-about mb-5">
-                <h2 class="text-center mb-4">Key Features</h2>
+            <div class="features-about mb-5 animate-fade-in-delay-2">
+                <h2 class="text-center mb-4" style="font-family: 'Outfit';">Key Features</h2>
                 <div class="row g-4">
                     <div class="col-md-6">
                         <div class="feature-about-card">
-                            <i class="fas fa-database fa-2x text-primary mb-3"></i>
+                            <i class="fas fa-database fa-2x mb-3"></i>
                             <h5>Comprehensive Dataset</h5>
-                            <p>Trained on 2000+ real estate transactions with multiple property features</p>
+                            <p class="text-muted mb-0">Trained on thousands of property records containing details on area, materials, build age, and condition metrics.</p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="feature-about-card">
-                            <i class="fas fa-chart-line fa-2x text-success mb-3"></i>
+                            <i class="fas fa-chart-line fa-2x mb-3"></i>
                             <h5>High Accuracy</h5>
-                            <p>Achieves R² score above 0.85 with low prediction error</p>
+                            <p class="text-muted mb-0">Maintains high-precision validation scores with minimum variance and robust error limits.</p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="feature-about-card">
-                            <i class="fas fa-sync-alt fa-2x text-info mb-3"></i>
-                            <h5>Real-time Predictions</h5>
-                            <p>Get instant price estimates in under 2 seconds</p>
+                            <i class="fas fa-sync-alt fa-2x mb-3"></i>
+                            <h5>Real-time Valuations</h5>
+                            <p class="text-muted mb-0">Instantly calculates estimated prices in milliseconds, returning detailed formatted receipts.</p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="feature-about-card">
-                            <i class="fas fa-shield-alt fa-2x text-warning mb-3"></i>
-                            <h5>Reliable & Secure</h5>
-                            <p>Built with industry best practices for data security</p>
+                            <i class="fas fa-shield-alt fa-2x mb-3"></i>
+                            <h5>Reliable Valuation Standard</h5>
+                            <p class="text-muted mb-0">Implements structured ML workflows following standardized cross-validation and feature scaling policies.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- CTA -->
-            <div class="text-center">
-                <h3 class="mb-4">Ready to Experience AI-Powered Predictions?</h3>
+            <div class="text-center mt-5">
+                <h3 class="mb-4" style="font-family: 'Outfit';">Ready to estimate your property value?</h3>
                 <a href="/predict" class="btn btn-primary btn-lg px-5 py-3">
                     <i class="fas fa-rocket me-2"></i> Try It Now
                 </a>
@@ -197,92 +275,65 @@
     <footer class="footer py-5">
         <div class="container">
             <div class="row g-4">
-                <!-- Brand Section -->
                 <div class="col-lg-4 col-md-6">
                     <div class="footer-brand mb-3">
                         <div class="d-flex align-items-center mb-3">
-                            <div class="brand-logo me-2">
-                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M16 4L4 14V28H12V20H20V28H28V14L16 4Z" fill="url(#footerLogoGradient)" />
-                                    <defs>
-                                        <linearGradient id="footerLogoGradient" x1="4" y1="4" x2="28" y2="28"
-                                            gradientUnits="userSpaceOnUse">
-                                            <stop stop-color="#ec4899" />
-                                            <stop offset="1" stop-color="#8b5cf6" />
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
-                            </div>
-                            <h5 class="mb-0 fw-bold">HousePredict AI</h5>
+                            <h5 class="mb-0 fw-bold" style="font-family: 'Outfit'; font-size: 1.6rem; color: var(--brand-forest);">Smart Property</h5>
+                            <i class="fas fa-leaf ms-2" style="color: var(--brand-sage);"></i>
                         </div>
                         <p class="footer-text">
-                            AI-powered real estate valuation platform. Make smarter property decisions with machine
-                            learning.
+                            AI-powered real estate valuation platform. Make smarter property decisions with machine learning.
                         </p>
                     </div>
                 </div>
-
-                <!-- Quick Links -->
                 <div class="col-lg-2 col-md-6">
                     <h6 class="footer-heading mb-3">Quick Links</h6>
                     <ul class="footer-links list-unstyled">
                         <li><a href="/">Home</a></li>
                         <li><a href="/predict">Predict Price</a></li>
+                        <li><a href="/dashboard">Dashboard</a></li>
                         <li><a href="/analytics">Analytics</a></li>
-                        <li><a href="/about">About Us</a></li>
                     </ul>
                 </div>
-
-                <!-- Resources -->
                 <div class="col-lg-2 col-md-6">
                     <h6 class="footer-heading mb-3">Resources</h6>
                     <ul class="footer-links list-unstyled">
-                        <li><a href="/#features">Features</a></li>
-                        <li><a href="/#stats">Statistics</a></li>
-                        <li><a href="/analytics">Data Insights</a></li>
                         <li><a href="/about">Technology</a></li>
+                        <li><a href="/analytics">Market Trends</a></li>
+                        <li><a href="https://github.com/Ankit2006Raj" target="_blank">Open Source</a></li>
                     </ul>
                 </div>
-
-                <!-- Contact & Social -->
                 <div class="col-lg-4 col-md-6">
                     <h6 class="footer-heading mb-3">Connect With Us</h6>
                     <div class="footer-contact mb-3">
-                        <a href="mailto:ankit9905163014@gmail.com" class="contact-item">
-                            <i class="fas fa-envelope"></i>
+                        <a href="mailto:ankit9905163014@gmail.com" class="contact-item text-decoration-none" style="color: var(--text-normal);">
+                            <i class="fas fa-envelope me-2" style="color: var(--brand-sage);"></i>
                             <span>ankit9905163014@gmail.com</span>
                         </a>
                     </div>
-                    <div class="social-links">
-                        <a href="https://github.com/Ankit2006Raj" target="_blank" rel="noopener noreferrer"
-                            class="social-link" title="GitHub">
-                            <i class="fab fa-github"></i>
+                    <div class="social-links mt-3">
+                        <a href="https://github.com/Ankit2006Raj" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
+                            <i class="fab fa-github text-white"></i>
                         </a>
-                        <a href="https://www.linkedin.com/in/ankit-raj-226a36309" target="_blank"
-                            rel="noopener noreferrer" class="social-link" title="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
+                        <a href="https://www.linkedin.com/in/ankit-raj-226a36309" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin-in text-white"></i>
                         </a>
                         <a href="mailto:ankit9905163014@gmail.com" class="social-link" title="Email">
-                            <i class="fas fa-envelope"></i>
+                            <i class="fas fa-envelope text-white"></i>
                         </a>
                     </div>
                 </div>
             </div>
-
-            <!-- Footer Bottom -->
-            <div class="footer-bottom mt-4 pt-4">
+            <div class="footer-bottom mt-4 pt-4 border-top" style="border-color: var(--brand-pale-sage) !important;">
                 <div class="row align-items-center">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        <p class="mb-0 footer-copyright">
-                            &copy; 2024 HousePredict AI. All rights reserved.
+                        <p class="mb-0 footer-copyright" style="font-size: 0.9rem; color: var(--text-dim);">
+                            &copy; 2026 Smart Property. All rights reserved.
                         </p>
                     </div>
                     <div class="col-md-6 text-center text-md-end">
-                        <p class="mb-0 footer-credit">
-                            Built with <i class="fas fa-heart text-danger"></i> by <a
-                                href="https://github.com/Ankit2006Raj" target="_blank" class="creator-link">Ankit
-                                Raj</a>
+                        <p class="mb-0 footer-credit" style="font-size: 0.9rem; color: var(--text-dim);">
+                            Built with <i class="fas fa-heart text-danger"></i> by <a href="https://github.com/Ankit2006Raj" target="_blank" class="creator-link text-decoration-none" style="color: var(--brand-forest); font-weight: 700;">Ankit Raj</a>
                         </p>
                     </div>
                 </div>
