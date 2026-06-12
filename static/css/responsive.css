@@ -86,10 +86,11 @@ img {
 
     .navbar-collapse {
         margin-top: 1rem;
-        background: rgba(15, 23, 42, 0.95);
+        background: var(--bg-card);
         padding: 1rem;
         border-radius: 12px;
-        border: 1px solid rgba(99, 102, 241, 0.2);
+        border: 1px solid var(--brand-pale-sage);
+        box-shadow: var(--shadow-blue);
     }
 
     .theme-toggle {
