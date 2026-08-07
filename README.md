@@ -91,7 +91,9 @@ HOUSE-PRICE-PREDICTION/
 
 5. **Start the Flask Application**
    ```bash
+   
    python app.py
+   
    ```
 
 6. **Open your browser**
