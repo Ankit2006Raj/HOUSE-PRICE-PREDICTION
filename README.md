@@ -125,7 +125,6 @@ Navigate to the **Analytics** page to see:
 - Location-based pricing
 - Condition impact on prices
 - Bedroom count analysis
-- Year built trends
 
 ## 🤖 Machine Learning Models
 
