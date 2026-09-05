@@ -14,7 +14,6 @@ A complete full-stack machine learning web application that predicts house price
 - **Real-time Analytics**: Comprehensive data visualizations and insights
 - **High Accuracy**: R² score above 0.85 on test data
 - **User-Friendly**: Intuitive interface requiring no technical knowledge
-- **Instant Results**: Get predictions in under 2 seconds
 
 ## 📊 Project Structure
 
